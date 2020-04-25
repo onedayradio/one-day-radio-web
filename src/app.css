@@ -1,0 +1,15 @@
+body {
+  padding-right: 0 !important;
+  overflow: auto !important;
+  background-color: #080808;
+  color: #ffffff;
+  margin: 0;
+  font-size: 1rem;
+  text-align: left;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.5em;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
