@@ -6,6 +6,9 @@ export const userInfoFull = gql`
     email
     firstname
     lastname
+    displayName
+    countryCode
+    profileImageUrl
   }
 `
 

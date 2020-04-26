@@ -12,14 +12,11 @@ export interface User {
   firstname: string
   lastname: string
   email: string
+  displayName: string
+  countryCode: string
+  profileImageUrl: string
 }
 
-export interface AuthData {
-  auth: {
-    user: User
-  }
-}
-
-export interface AuthSocialVars {
+export interface LoadAuthUserResponse {
   user: User
 }

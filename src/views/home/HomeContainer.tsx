@@ -1,5 +1,5 @@
 import React from 'react'
 
-export const HomePage = React.memo(() => {
+export const HomeContainer = React.memo(() => {
   return <div>Home Page</div>
 })
