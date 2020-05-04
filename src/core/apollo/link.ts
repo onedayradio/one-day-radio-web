@@ -3,7 +3,7 @@ import { setContext } from '@apollo/link-context'
 
 import { authUtil, localStorageUtil } from '../../shared'
 
-const httpLink = createHttpLink({ uri: process.env.REACT_APP_API_URL })
+const httpLink = createHttpLink({ uri: `${process.env.REACT_APP_API_URL}/graphql` })
 
 const contextLink = setContext(() => {
   return {
