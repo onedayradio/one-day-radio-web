@@ -24,4 +24,4 @@ const handleAuthTokenLink = new ApolloLink((operation, forward) =>
   }),
 )
 
-export const link = ApolloLink.from([contextLink, handleAuthTokenLink, httpLink])
+export const link = ApolloLink.from([contextLink as any, handleAuthTokenLink, httpLink])

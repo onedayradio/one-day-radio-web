@@ -1,14 +1,21 @@
 import React from 'react'
-import { Flex, Box, Text } from '@chakra-ui/core'
-import { FaMusic } from 'react-icons/fa'
+import { Flex, Image } from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
 
-export const Logo = React.memo(() => {
+import logoImage from '../../assets/logo.svg'
+
+interface LogoProps {
+  logoImageWidth: {
+    base: number
+    lg: number
+  }
+}
+
+export const Logo = React.memo(({ logoImageWidth }: LogoProps) => {
   return (
     <Flex direction="row" align="center" justify="center" cursor="pointer">
       <Link to="/" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box as={FaMusic} />
-        <Text pl="2">One Day Radio</Text>
+        <Image src={logoImage} width={logoImageWidth} />
       </Link>
     </Flex>
   )
