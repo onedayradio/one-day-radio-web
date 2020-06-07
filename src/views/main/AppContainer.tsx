@@ -1,17 +1,11 @@
 import React, { useEffect } from 'react'
 import { CSSReset, DarkMode, useToast, IToast } from '@chakra-ui/core'
 
-import { Header } from '../../components'
-import { SpotifyButton, UserMenu } from '../../components'
+import { Header, HeaderWithUser } from '../../components'
 import { useQueryString, localStorageUtil } from '../../shared'
 import { AppRoutes } from './AppRoutes'
 import { TokenValidator } from './TokenValidator'
 import { useStoreState } from '../../core'
-
-const onSignInWithSpotify = () => {
-  const url = `${process.env.REACT_APP_API_URL}/spotify/auth`
-  window.location.href = url
-}
 
 const AUTH_ERROR_TOAST: IToast = {
   title: 'Unexpected error signing in!',
@@ -34,13 +28,7 @@ export const AppContainer = () => {
     <DarkMode>
       <CSSReset />
       {token && <TokenValidator />}
-      <Header>
-        {currentUser ? (
-          <UserMenu currentUser={currentUser} />
-        ) : (
-          <SpotifyButton onClick={onSignInWithSpotify} />
-        )}
-      </Header>
+      {!currentUser ? <Header /> : <HeaderWithUser user={currentUser} />}
       <AppRoutes />
     </DarkMode>
   )
