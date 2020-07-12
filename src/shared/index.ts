@@ -5,3 +5,4 @@ export { authUtil, localStorageUtil }
 export { useQueryString } from './hooks/useQueryString'
 export * from './types'
 export * from './graphql/queries/userQueries'
+export * from './graphql/queries/genresQueries'
