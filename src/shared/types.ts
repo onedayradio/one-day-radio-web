@@ -20,3 +20,12 @@ export interface User {
 export interface LoadAuthUserResponse {
   user: User
 }
+
+export interface Genre {
+  id: string
+  name: string
+}
+
+export interface GenresResponse {
+  genres: Genre[]
+}
