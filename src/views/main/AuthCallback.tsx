@@ -7,7 +7,7 @@ export const AuthCallback = () => {
   if (token) {
     localStorageUtil.storeToken(token as string)
     setTimeout(() => {
-      window.location.href = '/'
+      window.location.href = '/genres'
     }, 1000)
   }
   return <div></div>

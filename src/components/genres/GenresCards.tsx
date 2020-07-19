@@ -1,19 +1,16 @@
 import React from 'react'
 import { Flex } from '@chakra-ui/core'
 
-import { Genre } from '../../shared'
-import { GenreCard } from './GenreCard'
+import { Children } from '../../shared'
 
 interface GenresCardsProps {
-  genres: Genre[]
+  children: Children
 }
 
-export const GenresCards = React.memo(({ genres }: GenresCardsProps) => {
+export const GenresCards = React.memo(({ children }: GenresCardsProps) => {
   return (
     <Flex direction="row" wrap="wrap">
-      {genres.map((genre) => (
-        <GenreCard key={genre.id} genre={genre} />
-      ))}
+      {children}
     </Flex>
   )
 })
