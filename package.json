@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "3.0.0-rc.12",
+    "@apollo/client": "3.0.2",
     "@apollo/link-context": "2.0.0-beta.3",
     "@chakra-ui/core": "0.8.0",
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
-    "@types/node": "14.0.22",
+    "@types/node": "14.0.23",
     "@types/react": "16.9.43",
     "@types/react-dom": "16.9.8",
     "easy-peasy": "3.3.1",
@@ -22,7 +22,9 @@
     "react-icons": "3.10.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
-    "typescript": "3.9.6"
+    "react-slick": "0.27.0",
+    "slick-carousel": "1.8.1",
+    "typescript": "3.9.7"
   },
   "scripts": {
     "start": "cross-env PORT=3001 env-cmd -f .env react-scripts start",
@@ -56,6 +58,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "5.1.5",
+    "@types/react-slick": "0.23.4",
     "cross-env": "7.0.2",
     "env-cmd": "10.1.0",
     "husky": "4.2.5",

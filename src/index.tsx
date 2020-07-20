@@ -5,6 +5,9 @@ import { AppContainer } from './views'
 import * as serviceWorker from './serviceWorker'
 import { AppProviders } from './AppProviders'
 
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
 ReactDOM.render(
   <AppProviders>
     <AppContainer />
