@@ -1,22 +1,20 @@
 import React from 'react'
-import { Flex, Image } from '@chakra-ui/core'
+import { Image } from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
 
 import logoImage from '../../assets/logo.svg'
 
 interface LogoProps {
   logoImageWidth: {
-    base: number
+    base: number | string
     lg: number
   }
 }
 
 export const Logo = React.memo(({ logoImageWidth }: LogoProps) => {
   return (
-    <Flex direction="row" align="center" justify="center" cursor="pointer">
-      <Link to="/" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Image src={logoImage} width={logoImageWidth} />
-      </Link>
-    </Flex>
+    <Link to="/" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '1.8rem' }}>
+      <Image src={logoImage} width={logoImageWidth} />
+    </Link>
   )
 })

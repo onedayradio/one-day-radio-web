@@ -1,12 +1,11 @@
 import React from 'react'
 import { Flex } from '@chakra-ui/core'
-
-import { Logo } from './Logo'
+import { HeaderBox } from './HeaderBox'
 
 export const Header = React.memo(() => {
   return (
-    <Flex direction="row" justify="center" py="4" align="center">
-      <Logo logoImageWidth={{ base: 250, lg: 325 }} />
+    <Flex direction="row" zIndex={1} justify="center" align="center" h={80} w="100%" bg="dark.200" position="absolute">
+      <HeaderBox></HeaderBox>
     </Flex>
   )
 })
