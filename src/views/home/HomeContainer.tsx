@@ -1,15 +1,16 @@
 import React from 'react'
-import { SpotifyButton } from '../../components'
+import { Box } from '@chakra-ui/core'
+import { isMobile } from 'react-device-detect'
+import { Footer } from '../../components/footer/Footer'
+import { LoginBox } from './LoginBox'
+import { HomeBox } from './HomeBox'
 
-const onSignInWithSpotify = () => {
-  const url = `${process.env.REACT_APP_API_URL}/spotify/auth`
-  window.location.href = url
-}
+const backgroundImage = isMobile ? "url('/home-mobil.jpg')" : "url('/home-desktop.jpg')"
 
 export const HomeContainer = React.memo(() => {
-  return (
-    <div>
-      <SpotifyButton onClick={onSignInWithSpotify} />
-    </div>
-  )
+  return <Box bgImage={backgroundImage} backgroundRepeat="round" pos="relative" h="100vh">
+      <HomeBox></HomeBox>
+      <LoginBox></LoginBox>
+      <Footer></Footer>
+  </Box>
 })

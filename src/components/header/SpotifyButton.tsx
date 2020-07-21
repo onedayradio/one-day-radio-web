@@ -8,8 +8,15 @@ interface SpotifyButtonProps {
 
 export const SpotifyButton = React.memo(({ onClick }: SpotifyButtonProps) => {
   return (
-    <Button leftIcon={FaSpotify} onClick={onClick}>
-      Sign in With Spotify
+    <Button
+      leftIcon={FaSpotify}
+      borderRadius="lg"
+      size="lg"
+      fontSize="1.2rem"
+      fontWeight="400"
+      variantColor="spotify"
+      onClick={onClick}>
+        Sign in With Spotify
     </Button>
   )
 })

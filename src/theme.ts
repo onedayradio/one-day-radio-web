@@ -3,16 +3,19 @@ import { theme } from '@chakra-ui/core'
 export const AppTheme = {
   ...theme,
   fonts: {
-    heading: '"Avenir Next", sans-serif',
-    body: 'system-ui, sans-serif',
-    mono: 'Menlo, monospace',
+    heading: '"Josefin Sans", sans-serif',
+    body: '"Josefin Sans", sans-serif',
+    mono: '"Josefin Sans", monospace',
   },
   colors: {
     ...theme.colors,
-    brand: {
-      900: '#1a365d',
-      800: '#153e75',
-      700: '#2a69ac',
+    spotify: {
+      200: '#52b85e',
     },
+    dark: {
+      200: '#111f20',
+      500: '#293636',
+      600: '#293637',
+    }
   },
 }
