@@ -1,0 +1,37 @@
+{
+  "name": "infrastructure",
+  "version": "0.1.0",
+  "bin": {
+    "infrastructure": "bin/infrastructure.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "bootstrap": "cdk bootstrap",
+    "synth": "cdk synth",
+    "deploy:dev": "cross-env NODE_ENV=dev cdk deploy",
+    "deploy:prod": "cross-env NODE_ENV=prod cdk deploy",
+    "update-all": "yarn upgrade-interactive --latest"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.57.0",
+    "@types/jest": "^26.0.9",
+    "@types/node": "14.0.27",
+    "aws-cdk": "1.57.0",
+    "cross-env": "7.0.2",
+    "jest": "^26.2.2",
+    "ts-jest": "^26.1.4",
+    "ts-node": "^8.1.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-certificatemanager": "1.57.0",
+    "@aws-cdk/aws-cloudfront": "1.57.0",
+    "@aws-cdk/aws-s3": "1.57.0",
+    "@aws-cdk/aws-s3-deployment": "1.57.0",
+    "@aws-cdk/core": "1.57.0",
+    "source-map-support": "^0.5.16"
+  }
+}
