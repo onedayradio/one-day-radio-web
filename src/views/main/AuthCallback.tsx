@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useQueryString, localStorageUtil } from '../../shared'
 
-export const AuthCallback = () => {
+export default () => {
   const [token] = useQueryString('token')
   if (token) {
     localStorageUtil.storeToken(token as string)
