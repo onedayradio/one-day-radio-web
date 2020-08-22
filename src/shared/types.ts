@@ -29,3 +29,24 @@ export interface Genre {
 export interface GenresResponse {
   genres: Genre[]
 }
+
+export interface Song {
+  id: string
+  name: string
+  sharedBy: string
+  artists: string
+}
+
+export interface playlistSongsResponse {
+  loadPlayListSongs: playlistSongs
+}
+
+export interface playlistSongs {
+  songs: Song[]
+  total: number
+  perPage: number
+  lastPage: number
+  currentPage: number
+  from: number
+  last: number
+}
