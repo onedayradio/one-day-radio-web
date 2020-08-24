@@ -7,10 +7,12 @@ import { HomeBox } from './HomeBox'
 
 const backgroundImage = isMobile ? "url('/home-mobil.jpg')" : "url('/home-desktop.jpg')"
 
-export const HomeContainer = React.memo(() => {
-  return <Box bgImage={backgroundImage} backgroundRepeat="round" pos="relative" h="100vh">
+export default React.memo(() => {
+  return (
+    <Box bgImage={backgroundImage} backgroundRepeat="round" pos="relative" h="100vh">
       <HomeBox></HomeBox>
       <LoginBox></LoginBox>
       <Footer></Footer>
-  </Box>
+    </Box>
+  )
 })

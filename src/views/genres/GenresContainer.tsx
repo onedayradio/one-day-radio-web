@@ -7,7 +7,7 @@ import { QueryResponseWrapper, GenresCards, GenreCard } from '../../components'
 import { GenresBannerMobile } from './GenresBannerMobile'
 import { GenresBannerDesktop } from './GenresBannerDesktop'
 
-export const GenresContainer = React.memo(() => {
+export default React.memo(() => {
   const history = useHistory()
   const { data, error, loading } = useQuery<GenresResponse>(LOAD_ALL_GENRES)
   const genres = data?.genres || []

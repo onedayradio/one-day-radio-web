@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const LOAD_PLAYLIST_SONGS = gql`
-  query loadPlayListSongs($genreId: String){
-    loadPlayListSongs(genreId: $genreId){
+  query loadPlayListSongs($genreId: String) {
+    loadPlayListSongs(genreId: $genreId) {
       total
       perPage
       lastPage

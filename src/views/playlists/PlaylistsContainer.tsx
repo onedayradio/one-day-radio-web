@@ -6,12 +6,12 @@ interface PlaylistsContainerProps {
   genreId: string
 }
 
-export const PlaylistsContainer = React.memo(({ genreId }: PlaylistsContainerProps) => {
+export default React.memo(({ genreId }: PlaylistsContainerProps) => {
   console.log('Playlists container, genreId: ', genreId)
   return (
     <div>
-      <PlaylistSongsContainer genreId={genreId}/>
-      <PlaylistGenresContainer genreId={genreId}/>
+      <PlaylistSongsContainer genreId={genreId} />
+      <PlaylistGenresContainer genreId={genreId} />
     </div>
   )
 })
