@@ -10,3 +10,12 @@ export const LOAD_ALL_GENRES = gql`
   }
   ${genreInfoFull}
 `
+
+export const LOAD_GENRE = gql`
+  query loadGenre($genreId: String) {
+    genre: loadGenre(genreId: $genreId) {
+      ...GenreInfoFull
+    }
+  }
+  ${genreInfoFull}
+`

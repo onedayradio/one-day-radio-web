@@ -30,18 +30,35 @@ export interface GenresResponse {
   genres: Genre[]
 }
 
+export interface GenreResponse {
+  genre: Genre
+}
+
+export interface Image {
+  url: string
+  width: number
+  height: number
+}
+
+export interface Album {
+  id: string
+  name: string
+  images: Image[]
+}
+
 export interface Song {
   id: string
   name: string
   sharedBy: string
   artists: string
+  album: Album
 }
 
-export interface playlistSongsResponse {
-  loadPlayListSongs: playlistSongs
+export interface PlaylistSongsResponse {
+  loadPlaylistSongs: PlaylistSongs
 }
 
-export interface playlistSongs {
+export interface PlaylistSongs {
   songs: Song[]
   total: number
   perPage: number
