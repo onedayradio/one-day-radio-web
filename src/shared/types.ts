@@ -67,3 +67,12 @@ export interface PlaylistSongs {
   from: number
   last: number
 }
+
+export interface Device {
+  id: string
+  name: string
+}
+
+export interface DevicesResponse {
+  devices: Device[]
+}

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 
-import { QueryResponseWrapper, SongCard } from '../../components'
+import { ListenOnSpotifyPopover, QueryResponseWrapper, SongCard } from '../../components'
 import { PlaylistSongsResponse, LOAD_PLAYLIST_SONGS } from '../../shared'
-import { Button, Flex, Input, Stack } from '@chakra-ui/core'
+import { Box, Flex, Input, Stack } from '@chakra-ui/core'
 
 interface PlaylistsContainerProps {
   genreId: string
@@ -16,9 +16,11 @@ export const PlaylistSongsContainer = React.memo(({ genreId }: PlaylistsContaine
   const playlistSongs = data?.loadPlaylistSongs?.songs || []
   return (
     <QueryResponseWrapper loading={loading} error={error}>
-      <Flex mb={2} width='70%' margin='auto'>
-        <Input placeholder="Search for a song" />
-        <Button ml={2}>Listen on Spotify</Button>
+      <Flex width='70%' margin='auto' mt={2}>
+        <Input placeholder="Search on the playlist" mr={2}/>
+        <Box>
+          <ListenOnSpotifyPopover/>
+        </Box>
       </Flex>
       <Stack
         spacing={8}
