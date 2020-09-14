@@ -19,7 +19,7 @@ export const PlaylistSongsContainer = React.memo(({ genreId }: PlaylistsContaine
       <Flex width='70%' margin='auto' mt={2}>
         <Input placeholder="Search on the playlist" mr={2}/>
         <Box>
-          <ListenOnSpotifyPopover/>
+          <ListenOnSpotifyPopover genreId={genreId}/>
         </Box>
       </Flex>
       <Stack
