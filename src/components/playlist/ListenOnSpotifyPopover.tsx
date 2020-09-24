@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaSpotify } from 'react-icons/fa'
 import {
   Button,
@@ -16,15 +16,22 @@ import { DeviceListItem } from '..'
 
 const TEXT_BUTTON = 'Listen on Spotify'
 
-const onDeviceClick = (deviceId: string) => {
-  console.log('Device id: ', deviceId)
+interface ListenOnSpotifyPopoverProps {
+  genreId: string
 }
 
-export const ListenOnSpotifyPopover = React.memo(() => {
+export const ListenOnSpotifyPopover = React.memo(({ genreId }: ListenOnSpotifyPopoverProps) => {
   const { data, loading } = useQuery<DevicesResponse>(LOAD_DEVICES)
+  const [ isOpen, setIsOpen ] = useState(false)
+  const open = () => setIsOpen(!isOpen)
+  const close = () => setIsOpen(false)
   const devices = data?.devices || []
   return (
-    <Popover>
+    <Popover
+      returnFocusOnClose={false}
+      isOpen={isOpen}
+      onOpen={open}
+      onClose={close}>
       <PopoverTrigger>
         <Button
           leftIcon={ FaSpotify }
@@ -45,7 +52,12 @@ export const ListenOnSpotifyPopover = React.memo(() => {
         <PopoverBody>
           <List spacing={3}>
             {devices.map(({ name, id}) =>
-              <DeviceListItem key={id} name={name} id={id} onClick={onDeviceClick}/>
+              <DeviceListItem
+                key={id}
+                name={name}
+                deviceId={id}
+                genreId={genreId}
+                onClose={close}/>
             )}
           </List>
         </PopoverBody>
