@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text, Avatar, Box } from '@chakra-ui/core'
+import { Flex, Text, Avatar, Box, IconButton } from '@chakra-ui/core'
 import { Album, Song } from '../../shared'
 
 const DEFAULT_WIDTH = 300
@@ -14,7 +14,7 @@ const getImageUrl = (album: Album): string => {
 }
 
 const SongCardComp = ({ song }: SongCardProps) => {
-  const { name, artists, sharedBy, album } = song
+  const { name, artists, sharedBy, album, inPlaylist } = song
   const imageUrl = getImageUrl(album)
   return (
   <Flex
@@ -26,11 +26,14 @@ const SongCardComp = ({ song }: SongCardProps) => {
       <Avatar name={ name } src={ imageUrl }/>
       <Text ml={4}>{ name }</Text>
     </Flex>
-    <Box width='30%' >
+    <Box width='15%' >
       <Text>{ artists }</Text>
     </Box>
     <Box width='30%'>
-      <Text textAlign='center'>Shared by { sharedBy }</Text>
+      <Text textAlign='center' visibility={inPlaylist ? 'initial' : 'hidden'}>Shared by { sharedBy }</Text>
+    </Box>
+    <Box width='15%'>
+      <IconButton icon={inPlaylist ? 'check' : 'add'} aria-label="Add to playlist" isDisabled={inPlaylist} variant="outline"/>
     </Box>
   </Flex>
 )
