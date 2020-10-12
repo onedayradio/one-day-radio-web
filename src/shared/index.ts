@@ -14,3 +14,4 @@ export * from './graphql/queries/playlistQueries'
 export * from './graphql/queries/deviceQueries'
 
 export * from './graphql/mutations/deviceMutations'
+export * from './graphql/mutations/playlistMutations'

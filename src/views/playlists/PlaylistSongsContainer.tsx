@@ -31,6 +31,7 @@ export const PlaylistSongsContainer = React.memo(({ genreId }: PlaylistsContaine
           {playlistSongs.map((song) =>
             <SongCard
               key={song.id}
+              genreId={genreId}
               song={song}/>
           )}
         </Stack>

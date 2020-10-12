@@ -51,8 +51,8 @@ export interface Song {
   name: string
   sharedBy: string
   artists: string
+  uri: string
   album: Album
-  inPlaylist: boolean
 }
 
 export interface PlaylistSongsResponse {

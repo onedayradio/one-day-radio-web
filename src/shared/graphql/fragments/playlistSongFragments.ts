@@ -7,7 +7,7 @@ export const playlistSongs = gql`
       name
       sharedBy
       artists
-      inPlaylist
+      uri
       album {
         images {
           url
