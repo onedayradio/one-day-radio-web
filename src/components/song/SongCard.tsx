@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Flex, Text, Avatar, Box, IconButton } from '@chakra-ui/core'
-import { Album, Song } from '../../shared'
+import { Album, ADD_SONG_TO_PLAYLIST, Song } from '../../shared'
+import { useMutation } from '@apollo/client'
 
 const DEFAULT_WIDTH = 300
 
 interface SongCardProps {
   song: Song
+  genreId: string
+}
+
+interface AddSongHandleProps {
+  addSongToPlaylist: any
+  setShared: any
+  id: string
+  name: string
+  uri: string
+  artists: string
+  genreId: string
 }
 
 const getImageUrl = (album: Album): string => {
@@ -13,9 +25,37 @@ const getImageUrl = (album: Album): string => {
   return imageUrl ? imageUrl.url : ''
 }
 
-const SongCardComp = ({ song }: SongCardProps) => {
-  const { name, artists, sharedBy, album, inPlaylist } = song
+const getFormattedDate = () => {
+  const currentDate = new Date()
+  return {
+    day: currentDate.getDate().toString(),
+    month: (currentDate.getMonth() + 1).toString(),
+    year: currentDate.getFullYear().toString(),
+  }
+}
+
+const addSongHandle = async ({addSongToPlaylist, setShared, id, name, uri, artists, genreId }: AddSongHandleProps) => {
+  const date = getFormattedDate()
+  const { data: { addSongToPlaylist: { sharedBy } } } = await addSongToPlaylist({
+    variables: {
+      song: {
+        id,
+        name,
+        uri,
+        artists,
+      },
+      genreId,
+      date,
+    }
+  })
+  setShared(sharedBy)
+}
+
+export const SongCard = React.memo(({ song, genreId }: SongCardProps) => {
+  const [ addSongToPlaylist, { loading } ] = useMutation(ADD_SONG_TO_PLAYLIST)
+  const { name, artists, album, id, uri, sharedBy } = song
   const imageUrl = getImageUrl(album)
+  const [shared, setShared] = useState(sharedBy)
   return (
   <Flex
     align='center'
@@ -30,13 +70,16 @@ const SongCardComp = ({ song }: SongCardProps) => {
       <Text>{ artists }</Text>
     </Box>
     <Box width='30%'>
-      <Text textAlign='center' visibility={inPlaylist ? 'initial' : 'hidden'}>Shared by { sharedBy }</Text>
+      <Text textAlign='center' visibility={shared ? 'initial' : 'hidden'}>Shared by { shared }</Text>
     </Box>
     <Box width='15%'>
-      <IconButton icon={inPlaylist ? 'check' : 'add'} aria-label="Add to playlist" isDisabled={inPlaylist} variant="outline"/>
+      <IconButton
+        icon={!!shared ? 'check' : 'add'}
+        onClick={() => addSongHandle({ addSongToPlaylist, setShared, id, name, uri, artists, genreId })}
+        aria-label="Add to playlist"
+        isDisabled={!!shared}
+        isLoading={ loading }
+        variant="outline"/>
     </Box>
   </Flex>
-)
-}
-
-export const SongCard = React.memo(SongCardComp)
+)})
