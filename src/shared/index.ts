@@ -2,6 +2,8 @@ import * as localStorageUtil from './util/localStorage'
 
 import * as authUtil from './util/auth'
 
+export { browserHistory } from './util/historyUtil'
+
 export { authUtil, localStorageUtil }
 
 export { useQueryString } from './hooks/useQueryString'
