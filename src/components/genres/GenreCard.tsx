@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text, Image } from '@chakra-ui/core'
+import { Flex, Text, Image } from '@chakra-ui/react'
 import { isMobile } from 'react-device-detect'
 
 import { Genre } from '../../shared'

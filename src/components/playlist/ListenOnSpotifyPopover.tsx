@@ -9,7 +9,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { useQuery } from '@apollo/client'
 import { DevicesResponse, LOAD_DEVICES } from '../../shared'
 import { DeviceListItem } from '..'
@@ -34,14 +34,14 @@ export const ListenOnSpotifyPopover = React.memo(({ genreId }: ListenOnSpotifyPo
       onClose={close}>
       <PopoverTrigger>
         <Button
-          leftIcon={ FaSpotify }
+          leftIcon={ <FaSpotify/> }
           isLoading={ loading }
           loadingText={ TEXT_BUTTON }
           borderRadius="lg"
           size="md"
           fontSize="1rem"
           fontWeight="400"
-          variantColor="spotify">
+          colorScheme="spotify">
           { TEXT_BUTTON }
         </Button>
       </PopoverTrigger>

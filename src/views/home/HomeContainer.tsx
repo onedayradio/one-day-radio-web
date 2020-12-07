@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, useToast } from '@chakra-ui/core'
+import { Box, useToast } from '@chakra-ui/react'
 import { isMobile } from 'react-device-detect'
 import { Footer } from '../../components/footer/Footer'
 import { LoginBox } from './LoginBox'

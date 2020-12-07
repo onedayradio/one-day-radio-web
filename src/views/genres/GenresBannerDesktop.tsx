@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Heading, Divider } from '@chakra-ui/core'
+import { Flex, Heading, Divider } from '@chakra-ui/react'
 
 import bannerImage from '../../assets/genres-page-banner.jpg'
 

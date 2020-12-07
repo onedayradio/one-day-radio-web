@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 
 import { ListenOnSpotifyPopover, QueryResponseWrapper, SearchBar, SongCard } from '../../components'
 import { PlaylistSongsResponse, LOAD_PLAYLIST_SONGS } from '../../shared'
-import { Box, Flex, Stack } from '@chakra-ui/core'
+import { Box, Flex, Stack } from '@chakra-ui/react'
 
 interface PlaylistsContainerProps {
   genreId: string

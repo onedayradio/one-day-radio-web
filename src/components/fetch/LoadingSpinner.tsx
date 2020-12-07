@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spinner, Text, Flex } from '@chakra-ui/core'
+import { Spinner, Text, Flex } from '@chakra-ui/react'
 
 interface LoadingSpinnerProps {
   loadingText?: string

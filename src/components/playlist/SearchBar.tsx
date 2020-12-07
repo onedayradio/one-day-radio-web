@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Input } from '@chakra-ui/core'
+import { Input } from '@chakra-ui/react'
 
 interface SearchBarProps {
   onSearch: any

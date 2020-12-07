@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Flex, Text, Avatar, Box, IconButton } from '@chakra-ui/core'
+import { FaPlus, FaCheck } from 'react-icons/fa'
+import { Flex, Text, Avatar, Box, IconButton } from '@chakra-ui/react'
 import { Album, ADD_SONG_TO_PLAYLIST, Song } from '../../shared'
 import { useMutation } from '@apollo/client'
 
@@ -74,7 +75,7 @@ export const SongCard = React.memo(({ song, genreId }: SongCardProps) => {
     </Box>
     <Box width='15%'>
       <IconButton
-        icon={!!shared ? 'check' : 'add'}
+        icon={!!shared ? <FaCheck/> : <FaPlus/> }
         onClick={() => addSongHandle({ addSongToPlaylist, setShared, id, name, uri, artists, genreId })}
         aria-label="Add to playlist"
         isDisabled={!!shared}

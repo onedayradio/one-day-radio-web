@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ApolloError } from '@apollo/client'
-import { Text, Flex } from '@chakra-ui/core'
+import { Text, Flex } from '@chakra-ui/react'
 
 const graphErrorToError = (error: ApolloError | Error) => {
   if ((error as ApolloError).networkError) {

@@ -2,8 +2,8 @@ import { useState, useCallback } from 'react'
 import qs from 'query-string'
 
 const setQueryStringWithoutPageReload = (qsValue: string) => {
-  const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${qsValue}`
-  window.history.pushState({ path: newurl }, '', newurl)
+  const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${qsValue}`
+  window.history.pushState({ path: newUrl }, '', newUrl)
 }
 
 const setQueryStringValue = (key: string, value: string, queryString = window.location.search) => {

@@ -3,7 +3,7 @@ import { BiPlayCircle } from 'react-icons/bi'
 import {
   Button,
   ListItem,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { useMutation } from '@apollo/client'
 import { PLAY_ON_DEVICE } from '../../shared'
 
@@ -32,7 +32,7 @@ export const DeviceListItem = React.memo(({ deviceId, name, onClose, genreId }: 
         variant='ghost'
         textAlign='left'
         width='100%'
-        leftIcon={ BiPlayCircle }
+        leftIcon={ <BiPlayCircle/> }
         onClick={ () => onPlay(playOnDevice, { onClose, deviceId, genreId }) }
         isLoading={ loading }>
         { name }

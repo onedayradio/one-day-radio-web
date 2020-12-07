@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { User, authUtil } from '../../shared'
 
 interface UserMenuProps {
