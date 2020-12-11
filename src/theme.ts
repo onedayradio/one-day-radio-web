@@ -1,4 +1,4 @@
-import { theme } from '@chakra-ui/core'
+import { theme } from '@chakra-ui/react'
 
 export const AppTheme = {
   ...theme,
@@ -17,5 +17,8 @@ export const AppTheme = {
       500: '#293636',
       600: '#293637',
     },
+    fontColor: {
+      200: '#ffffff',
+    }
   },
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { CSSReset, DarkMode, useToast, IToast } from '@chakra-ui/core'
+import { DarkMode, useToast, IToast } from '@chakra-ui/react'
 
 import { Header, HeaderWithUser } from '../../components'
 import { useQueryString, localStorageUtil } from '../../shared'
@@ -26,7 +26,6 @@ export const AppContainer = () => {
   }, [authError]) // eslint-disable-line
   return (
     <DarkMode>
-      <CSSReset />
       {token && <TokenValidator />}
       {!currentUser ? <Header /> : <HeaderWithUser user={currentUser} />}
       <AppRoutes />

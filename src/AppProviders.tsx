@@ -2,7 +2,7 @@ import React from 'react'
 import { ApolloProvider } from '@apollo/client'
 import { Router } from 'react-router-dom'
 import { StoreProvider } from 'easy-peasy'
-import { ThemeProvider } from '@chakra-ui/core'
+import { ChakraProvider } from '@chakra-ui/react'
 
 import { Children, browserHistory } from './shared'
 import { store, apolloClient } from './core'
@@ -17,7 +17,7 @@ export const AppProviders = ({ children }: AppProvidersProps) => {
     <ApolloProvider client={apolloClient()}>
       <Router history={browserHistory}>
         <StoreProvider store={store}>
-          <ThemeProvider theme={AppTheme}>{children}</ThemeProvider>
+          <ChakraProvider theme={AppTheme}>{children}</ChakraProvider>
         </StoreProvider>
       </Router>
     </ApolloProvider>

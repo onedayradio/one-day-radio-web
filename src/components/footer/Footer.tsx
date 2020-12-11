@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '@chakra-ui/core'
+import { Flex } from '@chakra-ui/react'
 
 export const Footer = React.memo(() => {
   const footerText = `2020 @ One Day Radio ${process.env.REACT_APP_VERSION}`

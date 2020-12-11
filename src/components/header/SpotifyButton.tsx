@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@chakra-ui/core'
+import { Button } from '@chakra-ui/react'
 import { FaSpotify } from 'react-icons/fa'
 
 interface SpotifyButtonProps {
@@ -9,12 +9,12 @@ interface SpotifyButtonProps {
 export const SpotifyButton = React.memo(({ onClick }: SpotifyButtonProps) => {
   return (
     <Button
-      leftIcon={FaSpotify}
+      leftIcon={ <FaSpotify/> }
       borderRadius="lg"
       size="lg"
       fontSize="1.2rem"
       fontWeight="400"
-      variantColor="spotify"
+      colorScheme="spotify"
       onClick={onClick}>
         Sign in With Spotify
     </Button>

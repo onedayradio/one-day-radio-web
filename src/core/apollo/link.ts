@@ -25,7 +25,7 @@ const handleAuthTokenLink = new ApolloLink((operation, forward) =>
   }),
 )
 
-const onErrorLink = onError(({ graphQLErrors, networkError}) => {
+const onErrorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     for (let { extensions } of graphQLErrors) {
       const code = extensions && extensions.code
@@ -36,9 +36,9 @@ const onErrorLink = onError(({ graphQLErrors, networkError}) => {
             state: {
               error: {
                 code,
-                description: 'Session expired, please login.'
-              }
-            }
+                description: 'Session expired, please login.',
+              },
+            },
           })
       }
     }
@@ -46,4 +46,9 @@ const onErrorLink = onError(({ graphQLErrors, networkError}) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-export const link = ApolloLink.from([contextLink as any, handleAuthTokenLink, onErrorLink, httpLink])
+export const link = ApolloLink.from([
+  contextLink as any,
+  handleAuthTokenLink,
+  onErrorLink,
+  httpLink,
+])
