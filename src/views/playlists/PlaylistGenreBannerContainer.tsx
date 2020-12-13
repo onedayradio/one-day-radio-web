@@ -10,15 +10,11 @@ interface PlaylistGenreBannerProps {
 
 export const PlaylistGenreBannerContainer = React.memo(({ genreId }: PlaylistGenreBannerProps) => {
   const { data, error, loading } = useQuery<GenreResponse>(LOAD_GENRE, {
-    variables: { genreId }
+    variables: { genreId },
   })
   return (
     <QueryResponseWrapper loading={loading} error={error}>
-      <GenreBanner
-        genre={data?.genre}
-        width="100%"
-        height="330px"
-      />
+      <GenreBanner genre={data?.genre} width="100%" height="330px" />
     </QueryResponseWrapper>
   )
 })

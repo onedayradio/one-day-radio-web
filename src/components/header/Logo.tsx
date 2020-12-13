@@ -13,7 +13,15 @@ interface LogoProps {
 
 export const Logo = React.memo(({ logoImageWidth }: LogoProps) => {
   return (
-    <Link to="/" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '1.8rem' }}>
+    <Link
+      to="/"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: '1.8rem',
+      }}
+    >
       <Image src={logoImage} width={logoImageWidth} />
     </Link>
   )

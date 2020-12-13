@@ -1,10 +1,12 @@
 import gql from 'graphql-tag'
 
+import { playlistSongs } from '../fragments/playlistsFragments'
+
 export const ADD_SONG_TO_PLAYLIST = gql`
-  mutation($genreId: String, $song: SongInput, $date: DateDataInput) {
-    addSongToPlaylist(genreId: $genreId, song: $song, date: $date) {
-      name
-      sharedBy
+  mutation($playlistId: Int, $song: SongInput) {
+    playlistSong: addSongToPlaylist(playlistId: $playlistId, song: $song) {
+      ...PlaylistSongsFull
     }
   }
+  ${playlistSongs}
 `

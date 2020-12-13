@@ -22,12 +22,8 @@ const GenreBannerComp = ({
   height = DEFAULT_HEIGHT,
 }: GenreCardProps) => {
   const baseImageUrl = isMobile ? BASE_IMAGES_MOBILE_URL : BASE_IMAGES_DESKTOP_URL
-  const genreName = genre?.name
-    .toLocaleLowerCase()
-    .replace(/ /g, '')
-    .replace(/ñ/g, 'n')
-    .replace(/&/g, '')
-    || ''
+  const genreName =
+    genre?.name.toLocaleLowerCase().replace(/ /g, '').replace(/ñ/g, 'n').replace(/&/g, '') || ''
   return (
     <Box
       backgroundImage={`url(${baseImageUrl}-${genreName}.jpg)`}
@@ -41,11 +37,11 @@ const GenreBannerComp = ({
       <Image
         src={(genreIcons as any)[genreName]}
         height={{ base: '55px', md: '95px' }}
-        margin='auto'/>
-      <Text
-        textAlign='center'
-        fontSize="6xl"
-      >{genreName}</Text>
+        margin="auto"
+      />
+      <Text textAlign="center" fontSize="6xl">
+        {genreName}
+      </Text>
     </Box>
   )
 }

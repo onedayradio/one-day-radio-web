@@ -1,7 +1,11 @@
 import React from 'react'
+import { useQuery } from '@apollo/client'
+
 import { PlaylistGenresContainer } from './PlaylistGenresContainer'
 import { PlaylistSongsContainer } from './PlaylistSongsContainer'
 import { PlaylistGenreBannerContainer } from './PlaylistGenreBannerContainer'
+import { LoadPlaylistResponse, LOAD_PLAYLIST_BY_GENRE_ID } from '../../shared'
+import { QueryResponseWrapper } from '../../components'
 
 interface PlaylistsContainerProps {
   genreId: string
@@ -9,11 +13,18 @@ interface PlaylistsContainerProps {
 
 export default React.memo(({ genreId }: PlaylistsContainerProps) => {
   console.log('Playlists container, genreId: ', genreId)
+  const { data, error, loading } = useQuery<LoadPlaylistResponse>(LOAD_PLAYLIST_BY_GENRE_ID, {
+    variables: { genreId: parseInt(genreId) },
+  })
   return (
-    <div>
-      <PlaylistGenreBannerContainer genreId={genreId}/>
-      <PlaylistSongsContainer genreId={genreId} />
-      <PlaylistGenresContainer genreId={genreId} />
-    </div>
+    <QueryResponseWrapper loading={loading} error={error}>
+      {data && (
+        <>
+          <PlaylistGenreBannerContainer genreId={genreId} />
+          <PlaylistSongsContainer playlistId={data.playlist.id} />
+          <PlaylistGenresContainer />
+        </>
+      )}
+    </QueryResponseWrapper>
   )
 })

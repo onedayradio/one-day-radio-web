@@ -4,7 +4,7 @@ import { isMobile } from 'react-device-detect'
 import { Footer } from '../../components/footer/Footer'
 import { LoginBox } from './LoginBox'
 import { HomeBox } from './HomeBox'
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 
 const backgroundImage = isMobile ? "url('/home-mobil.jpg')" : "url('/home-desktop.jpg')"
 
@@ -17,7 +17,7 @@ const displayAuthWarning = ({ toast, history }: any) => {
     toast({
       title: error.code,
       description: error.description,
-      status: "warning",
+      status: 'warning',
       duration: 9000,
       isClosable: true,
     })
