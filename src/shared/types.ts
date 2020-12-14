@@ -34,39 +34,43 @@ export interface GenreResponse {
   genre: Genre
 }
 
-export interface Image {
-  url: string
-  width: number
-  height: number
-}
-
-export interface Album {
-  id: string
-  name: string
-  images: Image[]
-}
-
 export interface Song {
   id: string
   name: string
-  sharedBy: string
-  artists: string
-  uri: string
-  album: Album
+  spotifyId: string
+  spotifyUri: string
+  artistSpotifyIds: string
+  artistsNames: string
+  albumSpotifyId: string
+  albumName: string
+  albumImage300: string
+}
+
+export interface Playlist {
+  id: number
+  name: string
+  description: string
+  spotifyId: string
+  genreId: number
+}
+
+export interface LoadPlaylistResponse {
+  playlist: Playlist
 }
 
 export interface PlaylistSongsResponse {
-  loadPlaylistSongs: PlaylistSongs
+  playlistSongs: PlaylistSong[]
 }
 
-export interface PlaylistSongs {
-  songs: Song[]
-  total: number
-  perPage: number
-  lastPage: number
-  currentPage: number
-  from: number
-  last: number
+export interface AddSongToPlaylistResponse {
+  playlistSong: PlaylistSong
+}
+
+export interface PlaylistSong {
+  active: boolean
+  sharedBy?: User
+  sharedOn: string
+  song: Song
 }
 
 export interface Device {

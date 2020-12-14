@@ -36,7 +36,7 @@ const onErrorLink = onError(({ graphQLErrors, networkError }) => {
             state: {
               error: {
                 code,
-                description: 'Session expired, please login.',
+                description: 'Session expired, please sign in again',
               },
             },
           })

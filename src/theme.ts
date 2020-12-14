@@ -19,6 +19,6 @@ export const AppTheme = {
     },
     fontColor: {
       200: '#ffffff',
-    }
+    },
   },
 }

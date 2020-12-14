@@ -1,86 +1,80 @@
 import React, { useState } from 'react'
 import { FaPlus, FaCheck } from 'react-icons/fa'
 import { Flex, Text, Avatar, Box, IconButton } from '@chakra-ui/react'
-import { Album, ADD_SONG_TO_PLAYLIST, Song } from '../../shared'
 import { useMutation } from '@apollo/client'
+import { omit } from 'lodash'
 
-const DEFAULT_WIDTH = 300
+import { AddSongToPlaylistResponse, ADD_SONG_TO_PLAYLIST, PlaylistSong, Song } from '../../shared'
 
 interface SongCardProps {
-  song: Song
-  genreId: string
+  playlistSong: PlaylistSong
+  playlistId: number
 }
 
 interface AddSongHandleProps {
+  playlistId: number
   addSongToPlaylist: any
   setShared: any
-  id: string
-  name: string
-  uri: string
-  artists: string
-  genreId: string
+  song: Song
 }
 
-const getImageUrl = (album: Album): string => {
-  const imageUrl = album.images.find(image => image.width === DEFAULT_WIDTH)
-  return imageUrl ? imageUrl.url : ''
-}
-
-const getFormattedDate = () => {
-  const currentDate = new Date()
-  return {
-    day: currentDate.getDate().toString(),
-    month: (currentDate.getMonth() + 1).toString(),
-    year: currentDate.getFullYear().toString(),
-  }
-}
-
-const addSongHandle = async ({addSongToPlaylist, setShared, id, name, uri, artists, genreId }: AddSongHandleProps) => {
-  const date = getFormattedDate()
-  const { data: { addSongToPlaylist: { sharedBy } } } = await addSongToPlaylist({
+const addSongHandler = async ({
+  playlistId,
+  addSongToPlaylist,
+  setShared,
+  song,
+}: AddSongHandleProps) => {
+  const songInput = omit(song, 'id', '__typename')
+  const { data } = await addSongToPlaylist({
     variables: {
-      song: {
-        id,
-        name,
-        uri,
-        artists,
-      },
-      genreId,
-      date,
-    }
+      song: songInput,
+      playlistId,
+    },
   })
-  setShared(sharedBy)
+  const { playlistSong } = data as AddSongToPlaylistResponse
+  const { sharedBy } = playlistSong
+  setShared(sharedBy?.displayName)
 }
 
-export const SongCard = React.memo(({ song, genreId }: SongCardProps) => {
-  const [ addSongToPlaylist, { loading } ] = useMutation(ADD_SONG_TO_PLAYLIST)
-  const { name, artists, album, id, uri, sharedBy } = song
-  const imageUrl = getImageUrl(album)
-  const [shared, setShared] = useState(sharedBy)
+export const SongCard = React.memo(({ playlistSong, playlistId }: SongCardProps) => {
+  const [addSongToPlaylist, { loading }] = useMutation<AddSongToPlaylistResponse>(
+    ADD_SONG_TO_PLAYLIST,
+  )
+  const { sharedBy, song } = playlistSong
+  const { name, artistsNames, albumImage300 } = song
+  const [shared, setShared] = useState(sharedBy?.displayName)
   return (
-  <Flex
-    align='center'
-    marginTop='1rem'
-    border='1rem'
-    rounded='1rem'>
-    <Flex width='40%' align='center'>
-      <Avatar name={ name } src={ imageUrl }/>
-      <Text ml={4}>{ name }</Text>
+    <Flex align="center" marginTop="1rem" border="1rem" rounded="1rem">
+      <Flex width="40%" align="center">
+        <Avatar name={name} src={albumImage300} />
+        <Text ml={4}>{name}</Text>
+      </Flex>
+      <Box width="15%">
+        <Text>{artistsNames}</Text>
+      </Box>
+      <Box width="30%">
+        <Text textAlign="center" visibility={shared ? 'initial' : 'hidden'}>
+          Shared by {shared}
+        </Text>
+      </Box>
+      <Box width="15%">
+        <IconButton
+          style={{ color: 'black' }}
+          icon={!!shared ? <FaCheck /> : <FaPlus />}
+          onClick={() =>
+            addSongHandler({
+              playlistId,
+              addSongToPlaylist,
+              setShared,
+              song,
+            })
+          }
+          aria-label="Add to playlist"
+          isDisabled={!!shared}
+          isLoading={loading}
+          variant="outline"
+        />
+      </Box>
     </Flex>
-    <Box width='15%' >
-      <Text>{ artists }</Text>
-    </Box>
-    <Box width='30%'>
-      <Text textAlign='center' visibility={shared ? 'initial' : 'hidden'}>Shared by { shared }</Text>
-    </Box>
-    <Box width='15%'>
-      <IconButton
-        icon={!!shared ? <FaCheck/> : <FaPlus/> }
-        onClick={() => addSongHandle({ addSongToPlaylist, setShared, id, name, uri, artists, genreId })}
-        aria-label="Add to playlist"
-        isDisabled={!!shared}
-        isLoading={ loading }
-        variant="outline"/>
-    </Box>
-  </Flex>
-)})
+  )
+})

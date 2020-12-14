@@ -1,15 +1,30 @@
 import gql from 'graphql-tag'
 
-import { pagination } from '../fragments/paginationFragments'
-import { playlistSongs } from '../fragments/playlistSongFragments'
+import { playlistFull, playlistSongs } from '../fragments/playlistsFragments'
+
+export const LOAD_PLAYLIST_BY_GENRE_ID = gql`
+  query loadPlaylist($genreId: Int) {
+    playlist: loadPlaylist(genreId: $genreId) {
+      ...PlaylistFull
+    }
+  }
+  ${playlistFull}
+`
 
 export const LOAD_PLAYLIST_SONGS = gql`
-  query loadPlaylistSongs($genreId: String, $searchText: String) {
-    loadPlaylistSongs(genreId: $genreId, searchText: $searchText) {
-      ...PaginationFull
+  query loadPlaylistSongs($playlistId: Int) {
+    playlistSongs: loadPlaylistSongs(playlistId: $playlistId) {
       ...PlaylistSongsFull
     }
   }
-  ${pagination}
+  ${playlistSongs}
+`
+
+export const SEARCH_SONGS = gql`
+  query searchSongs($playlistId: Int, $searchText: String) {
+    playlistSongs: searchSongs(playlistId: $playlistId, searchText: $searchText) {
+      ...PlaylistSongsFull
+    }
+  }
   ${playlistSongs}
 `
