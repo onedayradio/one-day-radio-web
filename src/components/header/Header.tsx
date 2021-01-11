@@ -1,6 +1,6 @@
 import React from 'react'
 import { Flex } from '@chakra-ui/react'
-import { HeaderBox } from './HeaderBox'
+import { MainHeaderBox } from './MainHeaderBox'
 
 export const Header = React.memo(() => {
   return (
@@ -14,8 +14,8 @@ export const Header = React.memo(() => {
       zIndex={1}
       w="100%"
       h={78}
-    >
-      <HeaderBox></HeaderBox>
+      >
+      <MainHeaderBox/>
     </Flex>
   )
 })

@@ -1,14 +1,12 @@
-import { theme } from '@chakra-ui/react'
+import { extendTheme } from '@chakra-ui/react'
 
-export const AppTheme = {
-  ...theme,
+export const AppTheme = extendTheme({
   fonts: {
     heading: '"Josefin Sans", sans-serif',
     body: '"Josefin Sans", sans-serif',
     mono: '"Josefin Sans", monospace',
   },
   colors: {
-    ...theme.colors,
     spotify: {
       200: '#52b85e',
     },
@@ -21,4 +19,4 @@ export const AppTheme = {
       200: '#ffffff',
     },
   },
-}
+})
