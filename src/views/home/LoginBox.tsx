@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Divider, Text } from '@chakra-ui/react'
+import { Box, Center, Divider, Text } from '@chakra-ui/react'
 import { SpotifyButton } from '../../components'
 
 const onSignInWithSpotify = () => {
@@ -10,37 +10,46 @@ const onSignInWithSpotify = () => {
 export const LoginBox = React.memo(() => {
   return (
     <Box pos="absolute" bottom={50} fontWeight="300" w="100%" textAlign="center">
-      <Box bg={['none', 'dark.200']} height="40vh" py="2%">
+      <Center bg={['none', 'dark.200']} height="40vh">
         <Box
-          w={['100%', '60%']}
-          margin="auto"
+          borderWidth={['none', '1px']}
+          width={['100%', '60%']}
+          borderColor="fontColor.200"
           borderRadius="lg"
-          borderColor="white"
-          border={['none', '1px']}
-          h="100%"
-          py="1%"
+          paddingBottom="1rem"
+          paddingTop="1rem"
+          height="11rem"
         >
           <Text
+            display={['none', 'block']}
+            textTransform="uppercase"
+            color="fontColor.200"
             fontSize="0.9rem"
             fontWeight="600"
             py={4}
-            textTransform="uppercase"
-            display={['none', 'block']}
           >
             Enjoy the best music community
           </Text>
           <Divider
-            borderColor="white"
-            w={['40%', '20%']}
-            m="auto"
-            pt="1%"
+            borderColor="fontColor.200"
             display={['none', 'block']}
+            width={['40%', '20%']}
+            margin="auto"
           />
-          <Box pt={['40%', '1%']} pb="1%">
+          <Box paddingTop={['18%', '1.5rem']} pb="1%">
+            <Text
+              display={['block', 'none']}
+              color="fontColor.200"
+              fontWeight="400"
+              fontSize="2rem"
+              py={4}
+            >
+              Sign in
+            </Text>
             <SpotifyButton onClick={onSignInWithSpotify} />
           </Box>
         </Box>
-      </Box>
+      </Center>
     </Box>
   )
 })

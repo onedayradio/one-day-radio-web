@@ -22,7 +22,7 @@ export const HeaderWithUser = React.memo(({ user }: HeaderProps) => {
       w="100%"
       h={[55, 78]}
     >
-      <HeaderBox/>
+      <HeaderBox />
       <UserMenu currentUser={user} />
     </Flex>
   )

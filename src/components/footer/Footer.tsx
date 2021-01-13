@@ -7,6 +7,7 @@ export const Footer = React.memo(() => {
     <Flex
       display={['none', 'flex']}
       textTransform="uppercase"
+      color="fontColor.200"
       justify="center"
       direction="row"
       align="center"

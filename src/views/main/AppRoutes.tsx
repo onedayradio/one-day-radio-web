@@ -12,23 +12,24 @@ export const AppRoutes = () => {
   const currentUser = useStoreState((state) => state.currentUser.user)
 
   return (
-  <Suspense fallback={<LoadingSpinner/>}>
-    <Switch>
-      <Route
-        exact
-        path="/"
-        render={() => currentUser ? <Redirect to="/genres" /> : <HomeContainer/>}
-      />
-      <Route exact path="/auth-callback" component={AuthCallback}/>
-      <Route exact path="/genres" component={GenresContainer}/>
-      <Route
-        path="/playlist/:genreId"
-        render={({
-          match: {
-            params: { genreId },
-          },
-        }) => <PlaylistsContainer genreId={genreId} />}
-      />
-    </Switch>
-  </Suspense>
-  )}
+    <Suspense fallback={<LoadingSpinner />}>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => (currentUser ? <Redirect to="/genres" /> : <HomeContainer />)}
+        />
+        <Route exact path="/auth-callback" component={AuthCallback} />
+        <Route exact path="/genres" component={GenresContainer} />
+        <Route
+          path="/playlist/:genreId"
+          render={({
+            match: {
+              params: { genreId },
+            },
+          }) => <PlaylistsContainer genreId={genreId} />}
+        />
+      </Switch>
+    </Suspense>
+  )
+}
