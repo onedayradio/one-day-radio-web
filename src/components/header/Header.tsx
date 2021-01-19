@@ -14,8 +14,8 @@ export const Header = React.memo(() => {
       zIndex={1}
       w="100%"
       h={78}
-      >
-      <MainHeaderBox/>
+    >
+      <MainHeaderBox />
     </Flex>
   )
 })
