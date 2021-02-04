@@ -9,7 +9,7 @@ interface GenresCardsProps {
 
 export const GenresCards = React.memo(({ children }: GenresCardsProps) => {
   return (
-    <Flex direction="row" wrap="wrap">
+    <Flex direction="row" wrap="wrap" backgroundColor="dark.200">
       {children}
     </Flex>
   )
