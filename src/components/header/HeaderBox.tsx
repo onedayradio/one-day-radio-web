@@ -12,7 +12,7 @@ export const HeaderBox = React.memo(() => {
       boxShadow={['none', 'dark-lg']}
       bg="dark.200"
       w={[140, 250]}
-      h={[55, 100]}
+      h={[55, 85]}
       left={[7, 40]}
       _after={{
         content: '""',

@@ -17,7 +17,7 @@ interface UserMenuProps {
 }
 
 export const UserMenu = React.memo(({ currentUser }: UserMenuProps) => {
-  const avatarSize = useBreakpointValue({ base: 'sm', md: 'md' })
+  const avatarSize = useBreakpointValue({ base: 'sm', md: 'sm' })
 
   return (
     <Box position="absolute" right={[7, 40]}>

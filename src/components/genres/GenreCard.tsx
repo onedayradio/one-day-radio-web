@@ -14,7 +14,7 @@ interface GenreCardProps {
 
 const BASE_IMAGES_MOBILE_URL = 'https://one-day-radio-assets.s3.amazonaws.com/web-genres/mobile'
 const BASE_IMAGES_DESKTOP_URL = 'https://one-day-radio-assets.s3.amazonaws.com/web-genres/desktop'
-const DEFAULT_HEIGHT = { base: '190px', md: '330px' }
+const DEFAULT_HEIGHT = { base: '100px', md: '100px' }
 const DEFAULT_WIDTH = { base: '50%', lg: '25%' }
 
 const GenreCardComp = ({
