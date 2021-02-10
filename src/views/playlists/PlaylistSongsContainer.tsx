@@ -24,9 +24,9 @@ export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsConta
   const playlistSongs = data?.playlistSongs || []
   return (
     <>
-      <SearchBar onSearch={setSearchText} playlistId={playlistId}/>
+      <SearchBar onSearch={setSearchText} playlistId={playlistId} />
       <QueryResponseWrapper loading={loading} error={error}>
-        <Box height="40vh">
+        <Box height="30vh"overflowY="scroll">
           <Stack spacing={4} width="70%" margin="auto">
             {playlistSongs.map((playlistSong) => (
               <SongCard

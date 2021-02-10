@@ -44,23 +44,28 @@ export const SongCard = React.memo(({ playlistSong, playlistId }: SongCardProps)
   const { name, artistsNames, albumImage300 } = song
   const [shared, setShared] = useState(sharedBy?.displayName)
   return (
-    <Flex
-      boxShadow="dark-lg"
-      borderRadius="lg"
-      align="center"
-      padding={2}
-      >
+    <Flex boxShadow="dark-lg" borderRadius="lg" align="center" padding={2}>
       <Avatar marginRight={4} marginLeft={2} name={name} src={albumImage300} />
-      <Stack direction={["column", "row"]} width="100%">
-        <Text color="fontColor.200" width="45%">{name}</Text>
-        <Text color="fontColor.300" width="20%">{artistsNames}</Text>
-        <Text  color="fontColor.500" textAlign="center" visibility={shared ? 'initial' : 'hidden'} as="i" width="35%">
+      <Stack direction={['column', 'row']} width="100%">
+        <Text color="fontColor.200" width="45%">
+          {name}
+        </Text>
+        <Text color="fontColor.300" width="20%" isTruncated>
+          {artistsNames}
+        </Text>
+        <Text
+          color="fontColor.500"
+          textAlign="center"
+          visibility={shared ? 'initial' : 'hidden'}
+          as="i"
+          width="35%"
+        >
           Shared by {shared}
         </Text>
       </Stack>
       <IconButton
         marginRight={2}
-        style={{ color: 'black' }}
+        color={!!shared ? 'fontColor.500': 'fontColor.300'}
         icon={!!shared ? <FaCheck /> : <FaPlus />}
         onClick={() =>
           addSongHandler({

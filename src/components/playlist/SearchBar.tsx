@@ -29,12 +29,10 @@ export const SearchBar = React.memo(({ onSearch, playlistId }: SearchBarProps) =
         borderStyle="solid"
         borderRadius="lg"
         width="70%"
-        margin="auto">
+        margin="auto"
+      >
         <InputGroup>
-          <InputLeftElement
-            children={<FaSearch color="fontColor.500"/>}
-            pointerEvents="none"
-          />
+          <InputLeftElement children={<FaSearch color="fontColor.500" />} pointerEvents="none" />
           <Input
             onChange={(e: any) => setSearchText(e.target.value)}
             _placeholder={{ color: 'fontColor.500' }}

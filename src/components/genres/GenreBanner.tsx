@@ -48,12 +48,12 @@ const GenreBannerComp = ({
             color="fontColor.200"
             textAlign="center"
             fontWeight="600"
-            fontSize="5xl">
+            fontSize="5xl"
+          >
             {genreName}
           </Text>
         </Box>
       </Center>
-
     </Box>
   )
 }

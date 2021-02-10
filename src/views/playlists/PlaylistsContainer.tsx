@@ -8,7 +8,6 @@ import { PlaylistGenreBannerContainer } from './PlaylistGenreBannerContainer'
 import { LoadPlaylistResponse, LOAD_PLAYLIST_BY_GENRE_ID } from '../../shared'
 import { QueryResponseWrapper } from '../../components'
 
-
 interface PlaylistsContainerProps {
   genreId: string
 }

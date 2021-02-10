@@ -46,8 +46,18 @@ const GenreCardComp = ({
       transition="opacity .5s"
       onClick={() => onClick(genre)}
     >
-      <Image src={(genreIcons as any)[genreName]} height={{ base: '55px', md: '55px' }} marginBottom={3}/>
-      <Text fontSize="xl" fontWeight="600" textTransform="uppercase" color="fontColor.200" textAlign="center">
+      <Image
+        src={(genreIcons as any)[genreName]}
+        height={{ base: '55px', md: '55px' }}
+        marginBottom={3}
+      />
+      <Text
+        fontSize="xl"
+        fontWeight="600"
+        textTransform="uppercase"
+        color="fontColor.200"
+        textAlign="center"
+      >
         {genre.name}
       </Text>
     </Flex>
