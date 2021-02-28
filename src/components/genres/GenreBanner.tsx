@@ -29,9 +29,7 @@ const GenreBannerComp = ({
       backgroundImage={`url(${baseImageUrl}-${genreName}.jpg)`}
       paddingTop={55}
       backgroundSize="cover"
-      backgroundRepeat="no-repeat"
       backgroundPosition="center"
-      justifyContent="center"
       height={height}
       width={width}
     >
@@ -39,16 +37,16 @@ const GenreBannerComp = ({
         <Box>
           <Image
             src={(genreIcons as any)[genreName]}
-            height={{ base: '55px', md: '85px' }}
+            height={{ base: '60px', md: '85px' }}
             margin="auto"
           />
           <Text
             textTransform="uppercase"
-            marginTop={2}
+            marginTop={[1, 2]}
             color="fontColor.200"
             textAlign="center"
             fontWeight="600"
-            fontSize="5xl"
+            fontSize={['3xl', '5xl']}
           >
             {genreName}
           </Text>

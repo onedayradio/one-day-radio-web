@@ -14,7 +14,7 @@ export const PlaylistGenreBannerContainer = React.memo(({ genreId }: PlaylistGen
   })
   return (
     <QueryResponseWrapper loading={loading} error={error}>
-      <GenreBanner genre={data?.genre} width="100%" height={280} />
+      <GenreBanner genre={data?.genre} width="100%" height={[220, 280]} />
     </QueryResponseWrapper>
   )
 })

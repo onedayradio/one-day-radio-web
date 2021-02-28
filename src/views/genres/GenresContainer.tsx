@@ -22,7 +22,13 @@ export default React.memo(() => {
         <GenresBannerDesktop />
         <GenresCards>
           {genres.map((genre) => (
-            <GenreCard key={genre.id} genre={genre} onClick={onGenreClick} />
+            <GenreCard
+              height={[100, 250]}
+              width={['50%', '33.33%']}
+              key={genre.id}
+              genre={genre}
+              onClick={onGenreClick}
+            />
           ))}
         </GenresCards>
       </QueryResponseWrapper>

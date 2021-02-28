@@ -6,6 +6,7 @@ import bannerImage from '../../assets/genres-page-banner.jpg'
 export const GenresBannerDesktop = React.memo(() => {
   return (
     <Flex
+      paddingTop={55}
       direction="column"
       align="center"
       justify="center"

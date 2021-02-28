@@ -1,15 +1,12 @@
 import React from 'react'
-import { Spinner, Text, Flex } from '@chakra-ui/react'
+import { Spinner, Center } from '@chakra-ui/react'
 
 interface LoadingSpinnerProps {
   loadingText?: string
 }
 
-const LoadingSpinnerComp = ({ loadingText = 'Loading....' }: LoadingSpinnerProps) => (
-  <Flex direction="row" align="center" justify="center">
-    <Spinner size="lg" mr={2} />
-    <Text>{loadingText}</Text>
-  </Flex>
-)
-
-export const LoadingSpinner = React.memo(LoadingSpinnerComp)
+export const LoadingSpinner = React.memo(({ loadingText = 'Loading....' }: LoadingSpinnerProps) => (
+  <Center height="100%">
+    <Spinner thickness="3px" emptyColor="dark.700" color="fontColor.300" size="xl" />
+  </Center>
+))

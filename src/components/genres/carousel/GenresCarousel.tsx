@@ -5,8 +5,6 @@ import { GenresCarouselNextArrow } from './GenresCarouselNextArrow'
 import { GenresCarouselPreviousArrow } from './GenresCarouselPreviousArrow'
 import { Children } from '../../../shared'
 
-import './styles.css'
-
 const carouselOptions = {
   dots: false,
   infinite: true,

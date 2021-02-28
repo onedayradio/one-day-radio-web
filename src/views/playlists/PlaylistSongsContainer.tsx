@@ -26,8 +26,27 @@ export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsConta
     <>
       <SearchBar onSearch={setSearchText} playlistId={playlistId} />
       <QueryResponseWrapper loading={loading} error={error}>
-        <Box height="30vh"overflowY="scroll">
-          <Stack spacing={4} width="70%" margin="auto">
+        <Box
+          overflow="hidden"
+          height="100%"
+          display="flex"
+          flexDirection="column"
+          width={['100%', '71%']}
+          margin={['none', 'auto']}
+        >
+          <Stack
+            sx={{
+              '&::-webkit-scrollbar': {
+                backgroundColor: `rgba(0, 0, 0, 0.05)`,
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `rgba(0, 0, 0, 0.05)`,
+              },
+            }}
+            spacing={4}
+            overflowY="auto"
+            padding={3}
+          >
             {playlistSongs.map((playlistSong) => (
               <SongCard
                 key={playlistSong.song.spotifyId}

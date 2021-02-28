@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Box } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 
 import { PlaylistGenresContainer } from './PlaylistGenresContainer'
 import { PlaylistSongsContainer } from './PlaylistSongsContainer'
@@ -20,11 +20,11 @@ export default React.memo(({ genreId }: PlaylistsContainerProps) => {
   return (
     <QueryResponseWrapper loading={loading} error={error}>
       {data && (
-        <Box backgroundColor="dark.200">
+        <Flex backgroundColor="dark.200" height="100%" flexDirection="column">
           <PlaylistGenreBannerContainer genreId={genreId} />
           <PlaylistSongsContainer playlistId={data.playlist.id} />
           <PlaylistGenresContainer />
-        </Box>
+        </Flex>
       )}
     </QueryResponseWrapper>
   )

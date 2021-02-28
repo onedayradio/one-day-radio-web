@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FaPlus, FaCheck } from 'react-icons/fa'
-import { Flex, Text, Avatar, Stack, IconButton } from '@chakra-ui/react'
+import { Flex, Text, Avatar, Spacer, Stack, IconButton } from '@chakra-ui/react'
 import { useMutation } from '@apollo/client'
 import { omit } from 'lodash'
 
@@ -45,27 +45,30 @@ export const SongCard = React.memo(({ playlistSong, playlistId }: SongCardProps)
   const [shared, setShared] = useState(sharedBy?.displayName)
   return (
     <Flex boxShadow="dark-lg" borderRadius="lg" align="center" padding={2}>
-      <Avatar marginRight={4} marginLeft={2} name={name} src={albumImage300} />
-      <Stack direction={['column', 'row']} width="100%">
-        <Text color="fontColor.200" width="45%">
-          {name}
-        </Text>
-        <Text color="fontColor.300" width="20%" isTruncated>
-          {artistsNames}
-        </Text>
-        <Text
-          color="fontColor.500"
-          textAlign="center"
-          visibility={shared ? 'initial' : 'hidden'}
-          as="i"
-          width="35%"
-        >
-          Shared by {shared}
-        </Text>
-      </Stack>
+      <Avatar marginRight={[2, 4]} marginLeft={[1, 2]} name={name} src={albumImage300} />
+      <Spacer overflow="hidden">
+        <Stack direction={['column', 'row']}>
+          <Text color="fontColor.200" width={['100%', '45%']}>
+            {name}
+          </Text>
+          <Text color="fontColor.300" width={['100%', '45%']} isTruncated>
+            {artistsNames}
+          </Text>
+          <Text
+            color="fontColor.500"
+            textAlign="center"
+            display={shared ? 'inherit' : 'none'}
+            as="i"
+            width={['100%', '45%']}
+          >
+            Shared by {shared}
+          </Text>
+        </Stack>
+      </Spacer>
       <IconButton
-        marginRight={2}
-        color={!!shared ? 'fontColor.500': 'fontColor.300'}
+        marginRight={[1, 2]}
+        marginLeft={[1, 2]}
+        color={!!shared ? 'fontColor.500' : 'fontColor.300'}
         icon={!!shared ? <FaCheck /> : <FaPlus />}
         onClick={() =>
           addSongHandler({

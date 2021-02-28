@@ -20,7 +20,7 @@ export const SearchBar = React.memo(({ onSearch, playlistId }: SearchBarProps) =
   }, [searchText, onSearch])
 
   return (
-    <Box position="relative" top={-30}>
+    <Box position="relative" top={-30} height={30} marginBottom={[1, 5]}>
       <Flex
         backgroundColor="dark.200"
         boxShadow="dark-lg"
@@ -28,7 +28,7 @@ export const SearchBar = React.memo(({ onSearch, playlistId }: SearchBarProps) =
         borderColor="dark.200"
         borderStyle="solid"
         borderRadius="lg"
-        width="70%"
+        width={['92%', '70%']}
         margin="auto"
       >
         <InputGroup>
