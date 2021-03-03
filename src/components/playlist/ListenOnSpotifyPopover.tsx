@@ -11,11 +11,12 @@ import {
   PopoverHeader,
   PopoverTrigger,
 } from '@chakra-ui/react'
+import { isMobile } from 'react-device-detect'
 import { useQuery } from '@apollo/client'
 import { DevicesResponse, LOAD_DEVICES } from '../../shared'
 import { DeviceListItem } from '..'
 
-const TEXT_BUTTON = 'Listen on Spotify'
+const TEXT_BUTTON = isMobile ? '' : 'Listen on Spotify'
 
 interface ListenOnSpotifyPopoverProps {
   playlistId: number
@@ -34,8 +35,8 @@ export const ListenOnSpotifyPopover = React.memo(({ playlistId }: ListenOnSpotif
           leftIcon={<FaSpotify />}
           isLoading={loading}
           loadingText={TEXT_BUTTON}
+          iconSpacing={[0, 2]}
           borderRadius="lg"
-          size="md"
           fontSize="1rem"
           fontWeight="400"
           colorScheme="spotify"
@@ -43,10 +44,10 @@ export const ListenOnSpotifyPopover = React.memo(({ playlistId }: ListenOnSpotif
           {TEXT_BUTTON}
         </Button>
       </PopoverTrigger>
-      <PopoverContent zIndex={4}>
-        <PopoverArrow />
+      <PopoverContent zIndex={4} marginRight={5} marginLeft={5} backgroundColor="dark.200">
+        <PopoverArrow backgroundColor="dark.200" />
         <PopoverCloseButton />
-        <PopoverHeader>Spotify Active Devices</PopoverHeader>
+        <PopoverHeader textColor="fontColor.200">Spotify Active Devices</PopoverHeader>
         <PopoverBody>
           <List spacing={3}>
             {devices.map(({ name, id }) => (

@@ -8,21 +8,14 @@ import { genreIcons } from './genreIcons'
 interface GenreCardProps {
   genre: Genre
   onClick: (genre: Genre) => void
-  width?: any
-  height?: any
+  width: any
+  height: any
 }
 
 const BASE_IMAGES_MOBILE_URL = 'https://one-day-radio-assets.s3.amazonaws.com/web-genres/mobile'
 const BASE_IMAGES_DESKTOP_URL = 'https://one-day-radio-assets.s3.amazonaws.com/web-genres/desktop'
-const DEFAULT_HEIGHT = { base: '190px', md: '330px' }
-const DEFAULT_WIDTH = { base: '50%', lg: '25%' }
 
-const GenreCardComp = ({
-  genre,
-  onClick,
-  width = DEFAULT_WIDTH,
-  height = DEFAULT_HEIGHT,
-}: GenreCardProps) => {
+export const GenreCard = ({ genre, onClick, width, height }: GenreCardProps) => {
   const baseImageUrl = isMobile ? BASE_IMAGES_MOBILE_URL : BASE_IMAGES_DESKTOP_URL
   const genreName = genre.name
     .toLocaleLowerCase()
@@ -46,12 +39,20 @@ const GenreCardComp = ({
       transition="opacity .5s"
       onClick={() => onClick(genre)}
     >
-      <Image src={(genreIcons as any)[genreName]} height={{ base: '55px', md: '55px' }} marginBottom={3}/>
-      <Text fontSize="xl" fontWeight="600" textTransform="uppercase" color="fontColor.200" textAlign="center">
+      <Image
+        src={(genreIcons as any)[genreName]}
+        height={{ base: '35%', md: '35%' }}
+        marginBottom={3}
+      />
+      <Text
+        fontSize="xl"
+        fontWeight="600"
+        textTransform="uppercase"
+        color="fontColor.200"
+        textAlign="center"
+      >
         {genre.name}
       </Text>
     </Flex>
   )
 }
-
-export const GenreCard = React.memo(GenreCardComp)

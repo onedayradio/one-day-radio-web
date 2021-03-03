@@ -31,11 +31,11 @@ export const DeviceListItem = React.memo(
       <ListItem key={deviceId}>
         <Button
           variant="ghost"
-          textAlign="left"
           width="100%"
-          leftIcon={<BiPlayCircle />}
+          leftIcon={<BiPlayCircle color="#52b85e" /> /* not work spotify.200*/}
           onClick={() => onPlay(playOnDevice, { onClose, deviceId, playlistId })}
           isLoading={loading}
+          justifyContent="flex-start"
         >
           {name}
         </Button>

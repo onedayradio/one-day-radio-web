@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FaPlus, FaCheck } from 'react-icons/fa'
-import { Flex, Text, Avatar, Box, IconButton } from '@chakra-ui/react'
+import { Flex, Text, Avatar, Spacer, Stack, IconButton } from '@chakra-ui/react'
 import { useMutation } from '@apollo/client'
 import { omit } from 'lodash'
 
@@ -44,37 +44,45 @@ export const SongCard = React.memo(({ playlistSong, playlistId }: SongCardProps)
   const { name, artistsNames, albumImage300 } = song
   const [shared, setShared] = useState(sharedBy?.displayName)
   return (
-    <Flex align="center" marginTop="1rem" border="1rem" rounded="1rem">
-      <Flex width="40%" align="center">
-        <Avatar name={name} src={albumImage300} />
-        <Text ml={4}>{name}</Text>
-      </Flex>
-      <Box width="15%">
-        <Text>{artistsNames}</Text>
-      </Box>
-      <Box width="30%">
-        <Text textAlign="center" visibility={shared ? 'initial' : 'hidden'}>
-          Shared by {shared}
-        </Text>
-      </Box>
-      <Box width="15%">
-        <IconButton
-          style={{ color: 'black' }}
-          icon={!!shared ? <FaCheck /> : <FaPlus />}
-          onClick={() =>
-            addSongHandler({
-              playlistId,
-              addSongToPlaylist,
-              setShared,
-              song,
-            })
-          }
-          aria-label="Add to playlist"
-          isDisabled={!!shared}
-          isLoading={loading}
-          variant="outline"
-        />
-      </Box>
+    <Flex boxShadow="dark-lg" borderRadius="lg" align="center" padding={2}>
+      <Avatar marginRight={[2, 4]} marginLeft={[1, 2]} name={name} src={albumImage300} />
+      <Spacer overflow="hidden">
+        <Stack direction={['column', 'row']}>
+          <Text color="fontColor.200" width={['100%', '45%']}>
+            {name}
+          </Text>
+          <Text color="fontColor.300" width={['100%', '45%']} isTruncated>
+            {artistsNames}
+          </Text>
+          <Text
+            color="fontColor.500"
+            textAlign="center"
+            display={shared ? 'inherit' : 'none'}
+            as="i"
+            width={['100%', '45%']}
+          >
+            Shared by {shared}
+          </Text>
+        </Stack>
+      </Spacer>
+      <IconButton
+        marginRight={[1, 2]}
+        marginLeft={[1, 2]}
+        color={!!shared ? 'fontColor.500' : 'fontColor.300'}
+        icon={!!shared ? <FaCheck /> : <FaPlus />}
+        onClick={() =>
+          addSongHandler({
+            playlistId,
+            addSongToPlaylist,
+            setShared,
+            song,
+          })
+        }
+        aria-label="Add to playlist"
+        isDisabled={!!shared}
+        isLoading={loading}
+        variant="outline"
+      />
     </Flex>
   )
 })
