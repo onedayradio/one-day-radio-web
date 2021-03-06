@@ -6,7 +6,7 @@ interface SpotifyButtonProps {
   onClick: () => void
 }
 
-export const SpotifyButton = React.memo(({ onClick }: SpotifyButtonProps) => {
+const SpotifyButtonComponent = ({ onClick }: SpotifyButtonProps) => {
   return (
     <Button
       leftIcon={<FaSpotify />}
@@ -20,4 +20,6 @@ export const SpotifyButton = React.memo(({ onClick }: SpotifyButtonProps) => {
       Sign in With Spotify
     </Button>
   )
-})
+}
+
+export const SpotifyButton = React.memo(SpotifyButtonComponent)
