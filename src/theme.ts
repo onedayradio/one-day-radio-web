@@ -8,6 +8,7 @@ export const AppTheme = extendTheme({
       },
       body: {
         height: '100%',
+        backgroundColor: '#111f20',
       },
       '#root': {
         display: 'flex',

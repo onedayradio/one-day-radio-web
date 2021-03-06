@@ -1,13 +1,13 @@
 import React from 'react'
 import { Box, Center, Divider, Text } from '@chakra-ui/react'
-import { SpotifyButton } from '../../components'
+import { SignInButton } from '../../components'
 
 const onSignInWithSpotify = () => {
   const url = `${process.env.REACT_APP_API_URL}/spotify/auth`
   window.location.href = url
 }
 
-export const LoginBox = React.memo(() => {
+const LoginBoxComponent = () => {
   return (
     <Box pos="absolute" bottom={50} fontWeight="300" w="100%" textAlign="center">
       <Center bg={['none', 'dark.200']} height="40vh">
@@ -46,10 +46,12 @@ export const LoginBox = React.memo(() => {
             >
               Sign in
             </Text>
-            <SpotifyButton onClick={onSignInWithSpotify} />
+            <SignInButton onClick={onSignInWithSpotify} />
           </Box>
         </Box>
       </Center>
     </Box>
   )
-})
+}
+
+export const LoginBox = React.memo(LoginBoxComponent)

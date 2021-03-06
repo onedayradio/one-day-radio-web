@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import logoImage from '../../assets/logo.svg'
 import curve from '../../assets/logo-cont-curva-small.svg'
 
-export const HeaderBox = React.memo(() => {
+const HeaderBoxComponent = () => {
   return (
     <Box
       position="absolute"
@@ -32,4 +32,6 @@ export const HeaderBox = React.memo(() => {
       </Box>
     </Box>
   )
-})
+}
+
+export const HeaderBox = React.memo(HeaderBoxComponent)

@@ -27,7 +27,7 @@ const handleAuthTokenLink = new ApolloLink((operation, forward) =>
 
 const onErrorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    for (let { extensions } of graphQLErrors) {
+    for (const { extensions } of graphQLErrors) {
       const code = extensions && extensions.code
       switch (code) {
         case 'UNAUTHENTICATED':

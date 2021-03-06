@@ -5,10 +5,10 @@ import { ListenOnSpotifyPopover } from './ListenOnSpotifyPopover'
 
 interface SearchBarProps {
   onSearch: any
-  playlistId: number
+  genreId: number
 }
 
-export const SearchBar = React.memo(({ onSearch, playlistId }: SearchBarProps) => {
+const SearchBarComponent = ({ onSearch, genreId }: SearchBarProps) => {
   const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
@@ -32,7 +32,9 @@ export const SearchBar = React.memo(({ onSearch, playlistId }: SearchBarProps) =
         margin="auto"
       >
         <InputGroup>
-          <InputLeftElement children={<FaSearch color="fontColor.500" />} pointerEvents="none" />
+          <InputLeftElement pointerEvents="none">
+            <FaSearch color="fontColor.500" />
+          </InputLeftElement>
           <Input
             onChange={(e: any) => setSearchText(e.target.value)}
             _placeholder={{ color: 'fontColor.500' }}
@@ -46,9 +48,11 @@ export const SearchBar = React.memo(({ onSearch, playlistId }: SearchBarProps) =
           />
         </InputGroup>
         <Box>
-          <ListenOnSpotifyPopover playlistId={playlistId} />
+          <ListenOnSpotifyPopover genreId={genreId} />
         </Box>
       </Flex>
     </Box>
   )
-})
+}
+
+export const SearchBar = React.memo(SearchBarComponent)

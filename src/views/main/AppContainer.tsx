@@ -27,7 +27,7 @@ export const AppContainer = () => {
   return (
     <DarkMode>
       {token && <TokenValidator />}
-      {!currentUser ? <Header /> : <HeaderWithUser user={currentUser} />}
+      {currentUser && <HeaderWithUser user={currentUser} />}
       <AppRoutes />
     </DarkMode>
   )

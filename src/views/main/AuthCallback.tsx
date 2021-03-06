@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useQueryString, localStorageUtil } from '../../shared'
 
-/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
+// eslint-disable-next-line react/display-name
 export default () => {
   const [token] = useQueryString('token')
   if (token) {

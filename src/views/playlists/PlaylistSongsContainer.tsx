@@ -6,25 +6,25 @@ import { PlaylistSongsResponse, LOAD_PLAYLIST_SONGS, SEARCH_SONGS } from '../../
 import { Box, Stack } from '@chakra-ui/react'
 
 interface PlaylistsContainerProps {
-  playlistId: number
+  genreId: number
 }
 
 const getQuery = (searchText?: string) => (searchText ? SEARCH_SONGS : LOAD_PLAYLIST_SONGS)
 
-const getQueryParams = (playlistId: number, searchText?: string) =>
-  searchText ? { playlistId, searchText } : { playlistId }
+const getQueryParams = (genreId: number, searchText?: string) =>
+  searchText ? { genreId, searchText } : { genreId }
 
-export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsContainerProps) => {
+export const PlaylistSongsContainer = React.memo(({ genreId }: PlaylistsContainerProps) => {
   const [searchText, setSearchText] = useState()
   const query = getQuery(searchText)
-  const queryParams = getQueryParams(playlistId, searchText)
+  const queryParams = getQueryParams(genreId, searchText)
   const { data, error, loading } = useQuery<PlaylistSongsResponse>(query, {
     variables: queryParams,
   })
   const playlistSongs = data?.playlistSongs || []
   return (
     <>
-      <SearchBar onSearch={setSearchText} playlistId={playlistId} />
+      <SearchBar onSearch={setSearchText} genreId={genreId} />
       <QueryResponseWrapper loading={loading} error={error}>
         <Box
           overflow="hidden"
@@ -43,14 +43,14 @@ export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsConta
                 backgroundColor: `rgba(0, 0, 0, 0.05)`,
               },
             }}
-            spacing={4}
+            spacing={8}
             overflowY="auto"
             padding={3}
           >
             {playlistSongs.map((playlistSong) => (
               <SongCard
                 key={playlistSong.song.spotifyId}
-                playlistId={playlistId}
+                genreId={genreId}
                 playlistSong={playlistSong}
               />
             ))}

@@ -33,17 +33,18 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "update-all": "yarn upgrade-interactive --latest",
-    "format": "prettier --config .prettierrc 'src/**/*.(ts|tsx)' --write",
-    "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx"
+    "prettier": "prettier --config .prettierrc 'src/**/*.(ts|tsx)' --write",
+    "pretty": "pretty-quick --config .prettierrc --write 'src/**/*.(ts|tsx)'",
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx --quiet",
+    "lint-fix": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix"
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn format && yarn lint"
+      "pre-push": "yarn lint",
+      "pre-commit": "pretty-quick --staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "ignorePatterns": "**/*.js"
   },
   "browserslist": {
     "production": [
@@ -58,11 +59,30 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.0.1",
+    "@commitlint/config-conventional": "^12.0.1",
     "@types/react-router-dom": "5.1.6",
     "@types/react-slick": "0.23.4",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "commitizen": "^4.2.3",
     "cross-env": "7.0.3",
+    "cz-conventional-changelog": "3.3.0",
     "env-cmd": "10.1.0",
-    "husky": "4.3.5",
-    "prettier": "2.2.1"
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.5",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "4.3.8",
+    "prettier": "^2.2.1",
+    "prettier-eslint": "^12.0.0",
+    "pretty-quick": "^3.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex } from '@chakra-ui/react'
 import { MainHeaderBox } from './MainHeaderBox'
 
-export const Header = React.memo(() => {
+const HeaderComponent = () => {
   return (
     <Flex
       position="absolute"
@@ -18,4 +18,6 @@ export const Header = React.memo(() => {
       <MainHeaderBox />
     </Flex>
   )
-})
+}
+
+export const Header = React.memo(HeaderComponent)
