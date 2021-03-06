@@ -7,10 +7,12 @@ interface GenresCardsProps {
   children: Children
 }
 
-export const GenresCards = React.memo(({ children }: GenresCardsProps) => {
+export const GenresCardsComponent = ({ children }: GenresCardsProps) => {
   return (
     <Flex direction="row" wrap="wrap" backgroundColor="dark.200">
       {children}
     </Flex>
   )
-})
+}
+
+export const GenresCards = React.memo(GenresCardsComponent)

@@ -9,7 +9,7 @@ interface HeaderProps {
   user: User
 }
 
-export const HeaderWithUser = React.memo(({ user }: HeaderProps) => {
+const HeaderWithUserComponent = ({ user }: HeaderProps) => {
   return (
     <Flex
       boxShadow="dark-lg"
@@ -26,4 +26,6 @@ export const HeaderWithUser = React.memo(({ user }: HeaderProps) => {
       <UserMenu currentUser={user} />
     </Flex>
   )
-})
+}
+
+export const HeaderWithUser = React.memo(HeaderWithUserComponent)

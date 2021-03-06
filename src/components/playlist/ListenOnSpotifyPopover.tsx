@@ -19,10 +19,10 @@ import { DeviceListItem } from '..'
 const TEXT_BUTTON = isMobile ? '' : 'Listen on Spotify'
 
 interface ListenOnSpotifyPopoverProps {
-  playlistId: number
+  genreId: number
 }
 
-export const ListenOnSpotifyPopover = React.memo(({ playlistId }: ListenOnSpotifyPopoverProps) => {
+const ListenOnSpotifyPopoverComponent = ({ genreId }: ListenOnSpotifyPopoverProps) => {
   const { data, loading } = useQuery<DevicesResponse>(LOAD_DEVICES)
   const [isOpen, setIsOpen] = useState(false)
   const open = () => setIsOpen(!isOpen)
@@ -55,7 +55,7 @@ export const ListenOnSpotifyPopover = React.memo(({ playlistId }: ListenOnSpotif
                 key={id}
                 name={name}
                 deviceId={id}
-                playlistId={playlistId}
+                genreId={genreId}
                 onClose={close}
               />
             ))}
@@ -64,4 +64,6 @@ export const ListenOnSpotifyPopover = React.memo(({ playlistId }: ListenOnSpotif
       </PopoverContent>
     </Popover>
   )
-})
+}
+
+export const ListenOnSpotifyPopover = React.memo(ListenOnSpotifyPopoverComponent)

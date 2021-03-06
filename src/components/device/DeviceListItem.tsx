@@ -8,38 +8,35 @@ interface DeviceListItemProps {
   deviceId: string
   name?: string
   onClose: () => void
-  playlistId: number
+  genreId: number
 }
 
-const onPlay = async (
-  playOnDevice: any,
-  { onClose, deviceId, playlistId }: DeviceListItemProps,
-) => {
+const onPlay = async (playOnDevice: any, { onClose, deviceId, genreId }: DeviceListItemProps) => {
   await playOnDevice({
     variables: {
       deviceId,
-      playlistId,
+      genreId,
     },
   })
   onClose()
 }
 
-export const DeviceListItem = React.memo(
-  ({ deviceId, name, onClose, playlistId }: DeviceListItemProps) => {
-    const [playOnDevice, { loading }] = useMutation(PLAY_ON_DEVICE)
-    return (
-      <ListItem key={deviceId}>
-        <Button
-          variant="ghost"
-          width="100%"
-          leftIcon={<BiPlayCircle color="#52b85e" /> /* not work spotify.200*/}
-          onClick={() => onPlay(playOnDevice, { onClose, deviceId, playlistId })}
-          isLoading={loading}
-          justifyContent="flex-start"
-        >
-          {name}
-        </Button>
-      </ListItem>
-    )
-  },
-)
+const DeviceListItemComponent = ({ deviceId, name, onClose, genreId }: DeviceListItemProps) => {
+  const [playOnDevice, { loading }] = useMutation(PLAY_ON_DEVICE)
+  return (
+    <ListItem key={deviceId}>
+      <Button
+        variant="ghost"
+        width="100%"
+        leftIcon={<BiPlayCircle color="#52b85e" /> /* not work spotify.200*/}
+        onClick={() => onPlay(playOnDevice, { onClose, deviceId, genreId })}
+        isLoading={loading}
+        justifyContent="flex-start"
+      >
+        {name}
+      </Button>
+    </ListItem>
+  )
+}
+
+export const DeviceListItem = React.memo(DeviceListItemComponent)

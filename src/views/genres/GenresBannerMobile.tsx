@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Divider, Center, Text } from '@chakra-ui/react'
 
-export const GenresBannerMobile = React.memo(() => {
+const GenresBannerMobileComponent = () => {
   return (
     <Box
       display={{ base: 'flex', lg: 'none' }}
@@ -28,4 +28,6 @@ export const GenresBannerMobile = React.memo(() => {
       </Center>
     </Box>
   )
-})
+}
+
+export const GenresBannerMobile = React.memo(GenresBannerMobileComponent)

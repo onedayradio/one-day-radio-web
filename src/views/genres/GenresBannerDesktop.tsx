@@ -3,7 +3,7 @@ import { Flex, Divider, Text, Box } from '@chakra-ui/react'
 
 import bannerImage from '../../assets/genres-page-banner.jpg'
 
-export const GenresBannerDesktop = React.memo(() => {
+const GenresBannerDesktopComponent = () => {
   return (
     <Flex
       paddingTop={55}
@@ -25,4 +25,6 @@ export const GenresBannerDesktop = React.memo(() => {
       </Box>
     </Flex>
   )
-})
+}
+
+export const GenresBannerDesktop = React.memo(GenresBannerDesktopComponent)

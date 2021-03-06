@@ -1,22 +1,25 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
+import { Flex } from '@chakra-ui/react'
 
 import { LOAD_ALL_GENRES, GenresResponse, Genre } from '../../shared'
 import { QueryResponseWrapper, GenresCards, GenreCard } from '../../components'
 import { GenresBannerMobile } from './GenresBannerMobile'
 import { GenresBannerDesktop } from './GenresBannerDesktop'
 
-export default React.memo(() => {
+// eslint-disable-next-line react/display-name
+export default () => {
   const history = useHistory()
   const { data, error, loading } = useQuery<GenresResponse>(LOAD_ALL_GENRES)
   const genres = data?.genres || []
+
   const onGenreClick = (genre: Genre) => {
-    console.log('genre clicked oh yeah', genre.name)
     history.push(`/playlist/${genre.id}`)
   }
+
   return (
-    <div>
+    <Flex height="100%" flexDirection="column">
       <QueryResponseWrapper loading={loading} error={error}>
         <GenresBannerMobile />
         <GenresBannerDesktop />
@@ -32,6 +35,6 @@ export default React.memo(() => {
           ))}
         </GenresCards>
       </QueryResponseWrapper>
-    </div>
+    </Flex>
   )
-})
+}

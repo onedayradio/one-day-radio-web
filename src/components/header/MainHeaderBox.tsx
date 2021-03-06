@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import logoImage from '../../assets/logo.svg'
 import curve from '../../assets/logo-cont-curva.svg'
 
-export const MainHeaderBox = React.memo(() => {
+export const MainHeaderBoxComponent = () => {
   return (
     <Box
       position="relative"
@@ -30,4 +30,6 @@ export const MainHeaderBox = React.memo(() => {
       </Box>
     </Box>
   )
-})
+}
+
+export const MainHeaderBox = React.memo(MainHeaderBoxComponent)

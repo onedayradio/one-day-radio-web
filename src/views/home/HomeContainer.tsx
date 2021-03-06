@@ -5,6 +5,7 @@ import { Footer } from '../../components/footer/Footer'
 import { LoginBox } from './LoginBox'
 import { HomeBox } from './HomeBox'
 import { useHistory } from 'react-router-dom'
+import { Header } from '../../components'
 
 const backgroundImage = isMobile ? "url('/home-mobil.jpg')" : "url('/home-desktop.jpg')"
 
@@ -24,7 +25,8 @@ const displayAuthWarning = ({ toast, history }: any) => {
   }
 }
 
-export default React.memo(() => {
+// eslint-disable-next-line react/display-name
+export default () => {
   const history = useHistory()
   const toast = useToast()
   useEffect(() => {
@@ -33,9 +35,10 @@ export default React.memo(() => {
 
   return (
     <Box bgImage={backgroundImage} backgroundRepeat="round" pos="relative" h="100vh">
+      <Header />
       <HomeBox></HomeBox>
       <LoginBox></LoginBox>
       <Footer></Footer>
     </Box>
   )
-})
+}

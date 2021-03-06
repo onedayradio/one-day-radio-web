@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex } from '@chakra-ui/react'
 
-export const Footer = React.memo(() => {
+export const FooterComponent = () => {
   const footerText = `2020 @ One Day Radio ${process.env.REACT_APP_VERSION}`
   return (
     <Flex
@@ -21,4 +21,6 @@ export const Footer = React.memo(() => {
       {footerText}
     </Flex>
   )
-})
+}
+
+export const Footer = React.memo(FooterComponent)

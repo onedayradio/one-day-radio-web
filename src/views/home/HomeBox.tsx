@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Divider, Text } from '@chakra-ui/react'
 
-export const HomeBox = React.memo(() => {
+const HomeBoxComponent = () => {
   return (
     <Box pos="absolute" top="35%" w="100%" textAlign="center">
       <Text fontSize="4xl" fontWeight="600" textTransform="uppercase" color="fontColor.200">
@@ -19,4 +19,6 @@ export const HomeBox = React.memo(() => {
       </Text>
     </Box>
   )
-})
+}
+
+export const HomeBox = React.memo(HomeBoxComponent)

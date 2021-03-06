@@ -1,6 +1,6 @@
 export { Header } from './header/Header'
 export { HeaderWithUser } from './header/HeaderWithUser'
-export { SpotifyButton } from './header/SpotifyButton'
+export { SignInButton } from './header/SignInButton'
 export { UserMenu } from './header/UserMenu'
 export { QueryResponseWrapper } from './fetch/QueryResponseWrapper'
 export { GenresCards } from './genres/GenresCards'
