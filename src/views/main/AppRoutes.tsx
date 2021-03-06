@@ -27,7 +27,7 @@ export const AppRoutes = () => {
             match: {
               params: { genreId },
             },
-          }) => <PlaylistsContainer genreId={genreId} />}
+          }) => <PlaylistsContainer genreId={parseInt(genreId)} />}
         />
       </Switch>
     </Suspense>

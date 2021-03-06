@@ -5,10 +5,10 @@ import { ListenOnSpotifyPopover } from './ListenOnSpotifyPopover'
 
 interface SearchBarProps {
   onSearch: any
-  genreId: number
+  playlistId: number
 }
 
-const SearchBarComponent = ({ onSearch, genreId }: SearchBarProps) => {
+const SearchBarComponent = ({ onSearch, playlistId }: SearchBarProps) => {
   const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const SearchBarComponent = ({ onSearch, genreId }: SearchBarProps) => {
           />
         </InputGroup>
         <Box>
-          <ListenOnSpotifyPopover genreId={genreId} />
+          <ListenOnSpotifyPopover playlistId={playlistId} />
         </Box>
       </Flex>
     </Box>

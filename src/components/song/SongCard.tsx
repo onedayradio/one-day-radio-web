@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FaPlus, FaCheck } from 'react-icons/fa'
-import { Center, Flex, Text, Avatar, Spacer, Stack, IconButton } from '@chakra-ui/react'
+import { Center, Flex, Text, Avatar, Spacer, IconButton } from '@chakra-ui/react'
 import { useMutation } from '@apollo/client'
 import { omit } from 'lodash'
 
@@ -8,18 +8,18 @@ import { AddSongToPlaylistResponse, ADD_SONG_TO_PLAYLIST, PlaylistSong, Song } f
 
 interface SongCardProps {
   playlistSong: PlaylistSong
-  genreId: number
+  playlistId: number
 }
 
 interface AddSongHandleProps {
-  genreId: number
+  playlistId: number
   addSongToPlaylist: any
   setShared: any
   song: Song
 }
 
 const addSongHandler = async ({
-  genreId,
+  playlistId,
   addSongToPlaylist,
   setShared,
   song,
@@ -28,7 +28,7 @@ const addSongHandler = async ({
   const { data } = await addSongToPlaylist({
     variables: {
       song: songInput,
-      genreId,
+      playlistId,
     },
   })
   const { playlistSong } = data as AddSongToPlaylistResponse
@@ -36,7 +36,7 @@ const addSongHandler = async ({
   setShared(sharedBy?.displayName)
 }
 
-const SongCardComponent = ({ playlistSong, genreId }: SongCardProps) => {
+const SongCardComponent = ({ playlistSong, playlistId }: SongCardProps) => {
   const [addSongToPlaylist, { loading }] = useMutation<AddSongToPlaylistResponse>(
     ADD_SONG_TO_PLAYLIST,
   )
@@ -78,7 +78,7 @@ const SongCardComponent = ({ playlistSong, genreId }: SongCardProps) => {
         icon={shared ? <FaCheck /> : <FaPlus />}
         onClick={() =>
           addSongHandler({
-            genreId,
+            playlistId,
             addSongToPlaylist,
             setShared,
             song,

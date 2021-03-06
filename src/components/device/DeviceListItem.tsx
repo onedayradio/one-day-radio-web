@@ -8,20 +8,23 @@ interface DeviceListItemProps {
   deviceId: string
   name?: string
   onClose: () => void
-  genreId: number
+  playlistId: number
 }
 
-const onPlay = async (playOnDevice: any, { onClose, deviceId, genreId }: DeviceListItemProps) => {
+const onPlay = async (
+  playOnDevice: any,
+  { onClose, deviceId, playlistId }: DeviceListItemProps,
+) => {
   await playOnDevice({
     variables: {
       deviceId,
-      genreId,
+      playlistId,
     },
   })
   onClose()
 }
 
-const DeviceListItemComponent = ({ deviceId, name, onClose, genreId }: DeviceListItemProps) => {
+const DeviceListItemComponent = ({ deviceId, name, onClose, playlistId }: DeviceListItemProps) => {
   const [playOnDevice, { loading }] = useMutation(PLAY_ON_DEVICE)
   return (
     <ListItem key={deviceId}>
@@ -29,7 +32,7 @@ const DeviceListItemComponent = ({ deviceId, name, onClose, genreId }: DeviceLis
         variant="ghost"
         width="100%"
         leftIcon={<BiPlayCircle color="#52b85e" /> /* not work spotify.200*/}
-        onClick={() => onPlay(playOnDevice, { onClose, deviceId, genreId })}
+        onClick={() => onPlay(playOnDevice, { onClose, deviceId, playlistId })}
         isLoading={loading}
         justifyContent="flex-start"
       >

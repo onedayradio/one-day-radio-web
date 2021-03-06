@@ -34,5 +34,9 @@ module.exports = {
       },
     },
   },
-  rules: {},
+  rules: {
+    "react/display-name": 0,
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off"
+  },
 };
