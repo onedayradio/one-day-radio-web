@@ -2,9 +2,9 @@ import gql from 'graphql-tag'
 
 import { playlistSongs, playlistFull } from '../fragments/playlistsFragments'
 
-export const LOAD_PLAYLIST_BY_GENRE = gql`
-  query loadPlaylist($genreId: Int) {
-    playlist: loadPlaylist(genreId: $genreId) {
+export const LOAD_PLAYLIST = gql`
+  query loadPlaylist($playlistId: Int) {
+    playlist: loadPlaylist(playlistId: $playlistId) {
       ...PlaylistFull
     }
   }

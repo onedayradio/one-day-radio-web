@@ -11,3 +11,6 @@ deploy-prod:
 	cd infrastructure && yarn bootstrap
 	cd infrastructure && yarn synth
 	cd infrastructure && yarn deploy:prod
+
+local:
+	yarn start
