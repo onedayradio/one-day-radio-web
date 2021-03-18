@@ -22,12 +22,14 @@ export const AppRoutes = () => {
         <Route exact path="/auth-callback" component={AuthCallback} />
         <Route exact path="/genres" component={GenresContainer} />
         <Route
-          path="/playlist/:genreId"
+          path="/genre/:genreId/playlist/:playlistId"
           render={({
             match: {
-              params: { genreId },
+              params: { playlistId, genreId },
             },
-          }) => <PlaylistsContainer genreId={genreId} />}
+          }) => (
+            <PlaylistsContainer playlistId={parseInt(playlistId)} genreId={parseInt(genreId)} />
+          )}
         />
       </Switch>
     </Suspense>

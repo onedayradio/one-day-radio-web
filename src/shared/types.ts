@@ -24,6 +24,7 @@ export interface LoadAuthUserResponse {
 export interface Genre {
   id: string
   name: string
+  playlistId: string
 }
 
 export interface GenresResponse {

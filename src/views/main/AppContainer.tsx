@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { DarkMode, useToast, IToast } from '@chakra-ui/react'
 
-import { Header, HeaderWithUser } from '../../components'
+import { HeaderWithUser } from '../../components'
 import { useQueryString, localStorageUtil } from '../../shared'
 import { AppRoutes } from './AppRoutes'
 import { TokenValidator } from './TokenValidator'

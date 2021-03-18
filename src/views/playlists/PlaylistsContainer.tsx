@@ -6,17 +6,15 @@ import { PlaylistSongsContainer } from './PlaylistSongsContainer'
 import { PlaylistGenreBannerContainer } from './PlaylistGenreBannerContainer'
 
 interface PlaylistsContainerProps {
+  playlistId: number
   genreId: number
 }
 
-// eslint-disable-next-line react/display-name
-export default ({ genreId }: PlaylistsContainerProps) => {
-  console.log('Playlists container, genreId: ', genreId)
-
+export default ({ playlistId, genreId }: PlaylistsContainerProps) => {
   return (
     <Flex backgroundColor="dark.200" height="100%" flexDirection="column">
       <PlaylistGenreBannerContainer genreId={genreId} />
-      <PlaylistSongsContainer genreId={genreId} />
+      <PlaylistSongsContainer playlistId={playlistId} />
       <PlaylistGenresContainer />
     </Flex>
   )

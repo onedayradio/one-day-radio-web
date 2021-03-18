@@ -15,7 +15,7 @@ export default () => {
   const genres = data?.genres || []
 
   const onGenreClick = (genre: Genre) => {
-    history.push(`/playlist/${genre.id}`)
+    history.push(`/genre/${genre.id}/playlist/${genre.playlistId}`)
   }
 
   return (
