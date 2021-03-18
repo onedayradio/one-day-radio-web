@@ -17,11 +17,11 @@ interface UserMenuProps {
 }
 
 export const UserMenu = React.memo(({ currentUser }: UserMenuProps) => {
-  const avatarSize = useBreakpointValue({ base: 'sm', md: 'sm' })
+  const avatarSize = useBreakpointValue({ base: 'sm' })
 
   return (
     <Box position="absolute" right={[7, 40]}>
-      <Popover trigger="hover" placement="bottom-start">
+      <Popover trigger="hover">
         <PopoverTrigger>
           <Box cursor="pointer">
             <Avatar
@@ -31,10 +31,10 @@ export const UserMenu = React.memo(({ currentUser }: UserMenuProps) => {
             />
           </Box>
         </PopoverTrigger>
-        <PopoverContent color="fontColor.200" width={90} cursor="pointer">
-          <PopoverArrow right={5} />
+        <PopoverContent color="fontColor.200" width="90px" cursor="pointer" backgroundColor="dark.200" right={["50px", 0]}>
+          <PopoverArrow backgroundColor="dark.200" left={["22px","-28px"]}/>
           <PopoverBody onClick={authUtil.signOut} color="red">
-            <Text>Log out</Text>
+            <Text color="fontColor.200">Log out</Text>
           </PopoverBody>
         </PopoverContent>
       </Popover>
