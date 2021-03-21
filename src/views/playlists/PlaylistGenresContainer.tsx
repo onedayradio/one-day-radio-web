@@ -3,9 +3,16 @@ import { useQuery } from '@apollo/client'
 
 import { Box, Flex, Text, Center, Divider } from '@chakra-ui/react'
 import { GenresCarousel, GenreCard } from '../../components'
-import { GenresResponse, LOAD_ALL_GENRES } from '../../shared'
+import { Genre, GenresResponse, LOAD_ALL_GENRES } from '../../shared'
+import { useHistory } from 'react-router-dom'
+
+
 
 export const PlaylistGenresContainerComponent = () => {
+  const history = useHistory()
+  const onGenreClick = (genre: Genre) => {
+    history.push(`/genre/${genre.id}/playlist/${genre.playlistId}`)
+  }
   const { data } = useQuery<GenresResponse>(LOAD_ALL_GENRES)
   const genres = data?.genres || []
   return (
@@ -29,7 +36,7 @@ export const PlaylistGenresContainerComponent = () => {
                 genre={genre}
                 width="100%"
                 height="130px"
-                onClick={() => console.log('genre clicked')}
+                onClick={onGenreClick}
               />
             ))}
           </GenresCarousel>
