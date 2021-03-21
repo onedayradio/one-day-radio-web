@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactGA from 'react-ga'
 import { ApolloProvider } from '@apollo/client'
 import { Router } from 'react-router-dom'
 import { StoreProvider } from 'easy-peasy'
@@ -11,6 +12,13 @@ import { AppTheme } from './theme'
 interface AppProvidersProps {
   children: Children
 }
+
+ReactGA.initialize(`${process.env.GOOGLE_ANALYTICS_TRACKING_ID}`)
+
+browserHistory.listen((location) => {
+  ReactGA.set({ page: location.pathname })
+  ReactGA.pageview(location.pathname)
+})
 
 export const AppProviders = ({ children }: AppProvidersProps) => {
   return (
