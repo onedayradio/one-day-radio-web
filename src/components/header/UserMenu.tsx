@@ -31,8 +31,14 @@ export const UserMenu = React.memo(({ currentUser }: UserMenuProps) => {
             />
           </Box>
         </PopoverTrigger>
-        <PopoverContent color="fontColor.200" width="90px" cursor="pointer" backgroundColor="dark.200" right={["50px", 0]}>
-          <PopoverArrow backgroundColor="dark.200" left={["22px","-28px"]}/>
+        <PopoverContent
+          color="fontColor.200"
+          width="90px"
+          cursor="pointer"
+          backgroundColor="dark.200"
+          right={['50px', 0]}
+        >
+          <PopoverArrow backgroundColor="dark.200" left={['22px', '-28px']} />
           <PopoverBody onClick={authUtil.signOut} color="red">
             <Text color="fontColor.200">Log out</Text>
           </PopoverBody>
