@@ -4,7 +4,13 @@ import { Center, Flex, Text, Avatar, Spacer, IconButton } from '@chakra-ui/react
 import { useMutation } from '@apollo/client'
 import { omit } from 'lodash'
 
-import { AddSongToPlaylistResponse, ADD_SONG_TO_PLAYLIST, PlaylistSong, Song } from '../../shared'
+import {
+  AddSongToPlaylistResponse,
+  ADD_SONG_TO_PLAYLIST,
+  LOAD_PLAYLIST_SONGS,
+  PlaylistSong,
+  Song,
+} from '../../shared'
 
 interface SongCardProps {
   playlistSong: PlaylistSong
@@ -39,6 +45,16 @@ const addSongHandler = async ({
 const SongCardComponent = ({ playlistSong, playlistId }: SongCardProps) => {
   const [addSongToPlaylist, { loading }] = useMutation<AddSongToPlaylistResponse>(
     ADD_SONG_TO_PLAYLIST,
+    {
+      refetchQueries: [
+        {
+          query: LOAD_PLAYLIST_SONGS,
+          variables: {
+            playlistId,
+          },
+        },
+      ],
+    },
   )
   const { sharedBy, song } = playlistSong
   const { name, artistsNames, albumImage300 } = song

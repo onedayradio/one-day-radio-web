@@ -35,6 +35,7 @@ const DeviceListItemComponent = ({ deviceId, name, onClose, playlistId }: Device
         onClick={() => onPlay(playOnDevice, { onClose, deviceId, playlistId })}
         isLoading={loading}
         justifyContent="flex-start"
+        overflow="hidden"
       >
         {name}
       </Button>
