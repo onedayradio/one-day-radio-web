@@ -6,8 +6,6 @@ import { GenresCarousel, GenreCard } from '../../components'
 import { Genre, GenresResponse, LOAD_ALL_GENRES } from '../../shared'
 import { useHistory } from 'react-router-dom'
 
-
-
 export const PlaylistGenresContainerComponent = () => {
   const history = useHistory()
   const onGenreClick = (genre: Genre) => {
