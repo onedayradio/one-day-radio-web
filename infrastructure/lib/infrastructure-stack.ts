@@ -50,6 +50,14 @@ export class InfrastructureStack extends cdk.Stack {
           behaviors: [{ isDefaultBehavior: true }],
         },
       ],
+      errorConfigurations: [
+        {
+          errorCode: 403,
+          errorCachingMinTtl: 60,
+          responsePagePath: '/index.html',
+          responseCode: 200,
+        },
+      ],
     }
     const cfOptions = isProd
       ? {
