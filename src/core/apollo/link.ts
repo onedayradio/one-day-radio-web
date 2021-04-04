@@ -1,9 +1,10 @@
 import { ApolloLink, createHttpLink } from '@apollo/client'
+import { onError } from '@apollo/client/link/error'
 import { setContext } from '@apollo/link-context'
 
-import { authUtil, localStorageUtil } from '../../shared'
+import { authUtil, localStorageUtil, browserHistory } from '../../shared'
 
-const httpLink = createHttpLink({ uri: process.env.REACT_APP_API_URL })
+const httpLink = createHttpLink({ uri: `${process.env.REACT_APP_API_URL}/graphql` })
 
 const contextLink = setContext(() => {
   return {
@@ -24,4 +25,30 @@ const handleAuthTokenLink = new ApolloLink((operation, forward) =>
   }),
 )
 
-export const link = ApolloLink.from([contextLink, handleAuthTokenLink, httpLink])
+const onErrorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    for (const { extensions } of graphQLErrors) {
+      const code = extensions && extensions.code
+      switch (code) {
+        case 'UNAUTHENTICATED':
+          browserHistory.push({
+            pathname: '/',
+            state: {
+              error: {
+                code,
+                description: 'Session expired, please sign in again',
+              },
+            },
+          })
+      }
+    }
+  }
+  if (networkError) console.log(`[Network error]: ${networkError}`)
+})
+
+export const link = ApolloLink.from([
+  contextLink as any,
+  handleAuthTokenLink,
+  onErrorLink,
+  httpLink,
+])

@@ -1,1 +1,1 @@
-export { HomePage } from './home/HomePage'
+export { AppContainer } from './main/AppContainer'
