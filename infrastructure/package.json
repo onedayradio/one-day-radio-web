@@ -10,7 +10,8 @@
     "test": "jest",
     "cdk": "cdk",
     "bootstrap": "cdk bootstrap",
-    "synth": "cdk synth",
+    "synth:dev": "cross-env NODE_ENV=dev cdk synth",
+    "synth:prod": "cross-env NODE_ENV=prod cdk synth",
     "deploy:dev": "cross-env NODE_ENV=dev cdk deploy",
     "deploy:prod": "cross-env NODE_ENV=prod cdk deploy",
     "update-all": "yarn upgrade-interactive --latest"
