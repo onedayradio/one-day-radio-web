@@ -12,20 +12,25 @@ import {
   PopoverTrigger,
 } from '@chakra-ui/react'
 import { isMobile } from 'react-device-detect'
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { DevicesResponse, LOAD_DEVICES } from '../../shared'
 import { DeviceListItem } from '..'
 
-const TEXT_BUTTON = isMobile ? '' : 'Listen on Spotify'
+const TEXT_BUTTON = isMobile ? '' : 'Play on Spotify'
 
 interface ListenOnSpotifyPopoverProps {
   playlistId: number
 }
 
 const ListenOnSpotifyPopoverComponent = ({ playlistId }: ListenOnSpotifyPopoverProps) => {
-  const { data, loading } = useQuery<DevicesResponse>(LOAD_DEVICES)
+  const [loadDevices, { loading, data }] = useLazyQuery<DevicesResponse>(LOAD_DEVICES, {
+    fetchPolicy: 'no-cache',
+  })
   const [isOpen, setIsOpen] = useState(false)
-  const open = () => setIsOpen(!isOpen)
+  const open = async () => {
+    await loadDevices()
+    setIsOpen(!isOpen)
+  }
   const close = () => setIsOpen(false)
   const devices = data?.devices || []
   return (
