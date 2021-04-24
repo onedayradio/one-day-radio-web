@@ -43,7 +43,9 @@ const onErrorLink = onError(({ graphQLErrors, networkError }) => {
       }
     }
   }
-  if (networkError) console.log(`[Network error]: ${networkError}`)
+  if (networkError) {
+    console.log(`[Network error]: ${networkError}`)
+  }
 })
 
 export const link = ApolloLink.from([
