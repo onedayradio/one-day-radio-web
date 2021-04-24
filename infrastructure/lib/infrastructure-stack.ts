@@ -20,30 +20,11 @@ export class InfrastructureStack extends cdk.Stack {
       websiteIndexDocument: 'index.html',
     })
 
-    // Deployment bucket for index.html. Here we set no cache for index.html
-    // to make sure we always get the newest version of index.html
-    new s3Deploy.BucketDeployment(
-      this,
-      `one-day-radio-web-${process.env.NODE_ENV}-s3-html-deployment`,
-      {
-        prune: false,
-        sources: [s3Deploy.Source.asset('../build', { exclude: ['*', '!index.html'] })],
-        destinationBucket: bucket,
-        cacheControl: [
-          s3Deploy.CacheControl.fromString('max-age=0,no-cache,no-store,must-revalidate'),
-        ],
-      },
-    )
-
-    // Deployment bucket configuration for all files except index.html.
-    // We cached everything but index.html for a max-age of 1 year, we
-    // can safely do this because create-react-app adds a hash to every
-    // file when running the production build
+    // Deployment
     new s3Deploy.BucketDeployment(this, `one-day-radio-web-${process.env.NODE_ENV}-s3-deployment`, {
-      prune: false,
-      sources: [s3Deploy.Source.asset('../build', { exclude: ['index.html'] })],
+      sources: [s3Deploy.Source.asset('../build')],
       destinationBucket: bucket,
-      cacheControl: [s3Deploy.CacheControl.fromString('max-age=31536000')],
+      cacheControl: [s3Deploy.CacheControl.fromString('max-age=60')],
     })
 
     // HTTPS Certificate (only for production deployments)
