@@ -7,3 +7,13 @@ export const showWarningToast = (error: any, toast: any) => {
     isClosable: true,
   })
 }
+
+export const showInfoToast = (message: string, toast: any) => {
+  toast({
+    title: 'Info',
+    description: message,
+    status: 'info',
+    duration: 3000,
+    isClosable: true,
+  })
+}

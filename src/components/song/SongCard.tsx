@@ -11,7 +11,7 @@ interface SongCardProps {
   showActionButtonLoading: boolean
   showPlayButtonLoading: boolean
   onAddSong: (playlistSong: PlaylistSong) => void
-  onPlaySong: (playlistSong: PlaylistSong) => void
+  onPlaySong: (playlistSong: PlaylistSong, showToast: boolean) => void
 }
 
 const SongCardComponent = ({
@@ -25,6 +25,7 @@ const SongCardComponent = ({
   const [isMouseHover, setIsMouseOver] = useState<boolean>(false)
   const { sharedBy, song } = playlistSong
   const { name, artistsNames, albumImage300 } = song
+  let preventPlaySong = false
   return (
     <Flex
       boxShadow="dark-lg"
@@ -36,9 +37,17 @@ const SongCardComponent = ({
       _hover={{
         background: 'dark.500',
       }}
+      onTouchMove={() => (preventPlaySong = true)}
+      onTouchEnd={() => {
+        if (preventPlaySong) {
+          preventPlaySong = false
+          return
+        }
+        onPlaySong(playlistSong, true)
+      }}
     >
       <SongCardPlayButton
-        onPlaySongClick={() => onPlaySong(playlistSong)}
+        onPlaySongClick={() => onPlaySong(playlistSong, false)}
         shouldShow={searchMode ? false : isMouseHover}
         showLoadingSpinner={showPlayButtonLoading}
       />

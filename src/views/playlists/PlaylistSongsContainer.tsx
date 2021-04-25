@@ -60,9 +60,12 @@ export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsConta
     }
   }
 
-  const playSongHandler = async (playlistSong: PlaylistSong) => {
+  const playSongHandler = async (playlistSong: PlaylistSong, showToast: boolean) => {
     try {
       setActiveSong(playlistSong.song)
+      if (showToast) {
+        toastsHelper.showInfoToast('Playing your song on your spotify device!', toast)
+      }
       await playOnDevice({
         variables: { playlistId, spotifySongUri: playlistSong.song.spotifyUri },
       })
