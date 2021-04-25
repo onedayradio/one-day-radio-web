@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import { omit } from 'lodash'
 
-import { QueryResponseWrapper, SearchBar, SongCard, SongCardActionButton } from '../../components'
+import { QueryResponseWrapper, SearchBar, SongCard, SongCards } from '../../components'
 import {
   PlaylistSongsResponse,
   LOAD_PLAYLIST_SONGS,
@@ -13,8 +13,9 @@ import {
   toastsHelper,
   Song,
   PlaylistSong,
+  PLAY_ON_DEVICE,
 } from '../../shared'
-import { Box, Stack, useToast } from '@chakra-ui/react'
+import { Box, useToast } from '@chakra-ui/react'
 
 interface PlaylistsContainerProps {
   playlistId: number
@@ -24,15 +25,6 @@ const getQuery = (searchText?: string) => (searchText ? SEARCH_SONGS : LOAD_PLAY
 
 const getQueryParams = (playlistId: number, searchText?: string) =>
   searchText ? { playlistId, searchText } : { playlistId }
-
-const stackStlye = {
-  '&::-webkit-scrollbar': {
-    backgroundColor: `rgba(0, 0, 0, 0.05)`,
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: `rgba(0, 0, 0, 0.05)`,
-  },
-}
 
 export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsContainerProps) => {
   const toast = useToast()
@@ -51,6 +43,7 @@ export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsConta
     variables: queryParams,
   })
   const playlistSongs = data?.playlistSongs || []
+  const [playOnDevice, { loading: isPlayingSong }] = useMutation(PLAY_ON_DEVICE)
 
   const addSongHandler = async (playlistSong: PlaylistSong) => {
     try {
@@ -61,6 +54,17 @@ export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsConta
           song: songInput,
           playlistId,
         },
+      })
+    } catch (error) {
+      toastsHelper.showWarningToast(error, toast)
+    }
+  }
+
+  const playSongHandler = async (playlistSong: PlaylistSong) => {
+    try {
+      setActiveSong(playlistSong.song)
+      await playOnDevice({
+        variables: { playlistId, spotifySongUri: playlistSong.song.spotifyUri },
       })
     } catch (error) {
       toastsHelper.showWarningToast(error, toast)
@@ -78,23 +82,25 @@ export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsConta
           width={['100%', '71%']}
           margin={['none', 'auto']}
         >
-          <Stack sx={stackStlye} spacing={8} overflowY="auto" padding={3}>
+          <SongCards>
             {playlistSongs.map((playlistSong) => (
-              <SongCard key={playlistSong.song.spotifyId} playlistSong={playlistSong}>
-                {searchText && (
-                  <SongCardActionButton
-                    onAddSongClick={() => addSongHandler(playlistSong)}
-                    playlistSong={playlistSong}
-                    isAddingSong={
-                      activeSong?.spotifyId === playlistSong.song.spotifyId
-                        ? isAddingSongToPlaylist
-                        : false
-                    }
-                  />
-                )}
-              </SongCard>
+              <SongCard
+                key={playlistSong.song.spotifyId}
+                playlistSong={playlistSong}
+                onAddSong={addSongHandler}
+                onPlaySong={playSongHandler}
+                searchMode={searchText ? true : false}
+                showActionButtonLoading={
+                  activeSong?.spotifyId === playlistSong.song.spotifyId
+                    ? isAddingSongToPlaylist
+                    : false
+                }
+                showPlayButtonLoading={
+                  activeSong?.spotifyId === playlistSong.song.spotifyId ? isPlayingSong : false
+                }
+              />
             ))}
-          </Stack>
+          </SongCards>
         </Box>
       </QueryResponseWrapper>
     </>

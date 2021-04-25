@@ -1,18 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Center, Flex, Text, Avatar, Spacer } from '@chakra-ui/react'
 
-import { Children, PlaylistSong } from '../../shared'
+import { PlaylistSong } from '../../shared'
+import { SongCardActionButton } from './SongCardActionButton'
+import { SongCardPlayButton } from './SongCardPlayButton'
 
 interface SongCardProps {
   playlistSong: PlaylistSong
-  children: Children
+  searchMode: boolean
+  showActionButtonLoading: boolean
+  showPlayButtonLoading: boolean
+  onAddSong: (playlistSong: PlaylistSong) => void
+  onPlaySong: (playlistSong: PlaylistSong) => void
 }
 
-const SongCardComponent = ({ playlistSong, children }: SongCardProps) => {
+const SongCardComponent = ({
+  playlistSong,
+  searchMode,
+  showActionButtonLoading,
+  showPlayButtonLoading,
+  onAddSong,
+  onPlaySong,
+}: SongCardProps) => {
+  const [isMouseHover, setIsMouseOver] = useState<boolean>(false)
   const { sharedBy, song } = playlistSong
   const { name, artistsNames, albumImage300 } = song
   return (
-    <Flex boxShadow="dark-lg" rounded="md" align="center" padding={3}>
+    <Flex
+      boxShadow="dark-lg"
+      rounded="md"
+      align="center"
+      padding={3}
+      onMouseEnter={() => setIsMouseOver(true)}
+      onMouseLeave={() => setIsMouseOver(false)}
+      _hover={{
+        background: 'dark.500',
+      }}
+    >
+      <SongCardPlayButton
+        onPlaySongClick={() => onPlaySong(playlistSong)}
+        shouldShow={searchMode ? false : isMouseHover}
+        showLoadingSpinner={showPlayButtonLoading}
+      />
       <Avatar marginRight={[2, 4]} marginLeft={[1, 2]} name={name} src={albumImage300} />
       <Spacer overflow="hidden">
         <Flex>
@@ -39,7 +68,13 @@ const SongCardComponent = ({ playlistSong, children }: SongCardProps) => {
           </Center>
         </Flex>
       </Spacer>
-      {children}
+      {searchMode && (
+        <SongCardActionButton
+          onAddSongClick={() => onAddSong(playlistSong)}
+          playlistSong={playlistSong}
+          showLoadingSpinner={showActionButtonLoading}
+        />
+      )}
     </Flex>
   )
 }

@@ -8,13 +8,13 @@ import { PlaylistSong } from '../../shared'
 interface SongCardActionButtonProps {
   onAddSongClick: () => void
   playlistSong: PlaylistSong
-  isAddingSong: boolean
+  showLoadingSpinner: boolean
 }
 
 const SongCardActionButtonComponent = ({
   onAddSongClick,
   playlistSong,
-  isAddingSong,
+  showLoadingSpinner,
 }: SongCardActionButtonProps) => {
   const sharedBy = get(playlistSong, 'sharedBy.displayName', null)
   return (
@@ -26,7 +26,7 @@ const SongCardActionButtonComponent = ({
       onClick={onAddSongClick}
       aria-label="Add to playlist"
       isDisabled={!!sharedBy}
-      isLoading={isAddingSong}
+      isLoading={showLoadingSpinner}
       variant="outline"
     />
   )
