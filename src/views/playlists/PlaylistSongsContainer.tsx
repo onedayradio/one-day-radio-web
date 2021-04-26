@@ -1,9 +1,21 @@
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
+import { omit } from 'lodash'
 
-import { QueryResponseWrapper, SearchBar, SongCard } from '../../components'
-import { PlaylistSongsResponse, LOAD_PLAYLIST_SONGS, SEARCH_SONGS } from '../../shared'
-import { Box, Stack } from '@chakra-ui/react'
+import { QueryResponseWrapper, SearchBar, SongCard, SongCards } from '../../components'
+import {
+  PlaylistSongsResponse,
+  LOAD_PLAYLIST_SONGS,
+  SEARCH_SONGS,
+  AddSongToPlaylistResponse,
+  ADD_SONG_TO_PLAYLIST,
+  addSongToPlaylistOptions,
+  toastsHelper,
+  Song,
+  PlaylistSong,
+  PLAY_ON_DEVICE,
+} from '../../shared'
+import { Box, useToast } from '@chakra-ui/react'
 
 interface PlaylistsContainerProps {
   playlistId: number
@@ -15,17 +27,56 @@ const getQueryParams = (playlistId: number, searchText?: string) =>
   searchText ? { playlistId, searchText } : { playlistId }
 
 export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsContainerProps) => {
-  const [searchText, setSearchText] = useState()
+  const toast = useToast()
+  const [searchText, setSearchText] = useState<string>()
+  const [activeSong, setActiveSong] = useState<Song>()
+  const [
+    addSongToPlaylist,
+    { loading: isAddingSongToPlaylist },
+  ] = useMutation<AddSongToPlaylistResponse>(
+    ADD_SONG_TO_PLAYLIST,
+    addSongToPlaylistOptions(playlistId),
+  )
   const query = getQuery(searchText)
   const queryParams = getQueryParams(playlistId, searchText)
-  const { data, error, loading } = useQuery<PlaylistSongsResponse>(query, {
+  const { data, error, loading: isLoadingPlaylistSongs } = useQuery<PlaylistSongsResponse>(query, {
     variables: queryParams,
   })
   const playlistSongs = data?.playlistSongs || []
+  const [playOnDevice, { loading: isPlayingSong }] = useMutation(PLAY_ON_DEVICE)
+
+  const addSongHandler = async (playlistSong: PlaylistSong) => {
+    try {
+      setActiveSong(playlistSong.song)
+      const songInput = omit(playlistSong.song, 'id', '__typename')
+      await addSongToPlaylist({
+        variables: {
+          song: songInput,
+          playlistId,
+        },
+      })
+    } catch (error) {
+      toastsHelper.showWarningToast(error, toast)
+    }
+  }
+
+  const playSongHandler = async (playlistSong: PlaylistSong, showToast: boolean) => {
+    try {
+      setActiveSong(playlistSong.song)
+      if (showToast) {
+        toastsHelper.showInfoToast('Playing your song on your spotify device!', toast)
+      }
+      await playOnDevice({
+        variables: { playlistId, spotifySongUri: playlistSong.song.spotifyUri },
+      })
+    } catch (error) {
+      toastsHelper.showWarningToast(error, toast)
+    }
+  }
   return (
     <>
       <SearchBar onSearch={setSearchText} playlistId={playlistId} />
-      <QueryResponseWrapper loading={loading} error={error}>
+      <QueryResponseWrapper loading={isLoadingPlaylistSongs} error={error}>
         <Box
           overflow="hidden"
           height="100%"
@@ -34,27 +85,25 @@ export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsConta
           width={['100%', '71%']}
           margin={['none', 'auto']}
         >
-          <Stack
-            sx={{
-              '&::-webkit-scrollbar': {
-                backgroundColor: `rgba(0, 0, 0, 0.05)`,
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: `rgba(0, 0, 0, 0.05)`,
-              },
-            }}
-            spacing={8}
-            overflowY="auto"
-            padding={3}
-          >
+          <SongCards>
             {playlistSongs.map((playlistSong) => (
               <SongCard
                 key={playlistSong.song.spotifyId}
-                playlistId={playlistId}
                 playlistSong={playlistSong}
+                onAddSong={addSongHandler}
+                onPlaySong={playSongHandler}
+                searchMode={searchText ? true : false}
+                showActionButtonLoading={
+                  activeSong?.spotifyId === playlistSong.song.spotifyId
+                    ? isAddingSongToPlaylist
+                    : false
+                }
+                showPlayButtonLoading={
+                  activeSong?.spotifyId === playlistSong.song.spotifyId ? isPlayingSong : false
+                }
               />
             ))}
-          </Stack>
+          </SongCards>
         </Box>
       </QueryResponseWrapper>
     </>

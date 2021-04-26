@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { FaSearch } from 'react-icons/fa'
-import { Box, Flex, InputGroup, Input, InputLeftElement } from '@chakra-ui/react'
+import { FaSearch, FaTimes } from 'react-icons/fa'
+import { Box, Flex, InputGroup, Input, InputLeftElement, InputRightElement } from '@chakra-ui/react'
 import { ListenOnSpotifyPopover } from './ListenOnSpotifyPopover'
 
 interface SearchBarProps {
@@ -14,7 +14,7 @@ const SearchBarComponent = ({ onSearch, playlistId }: SearchBarProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onSearch(searchText)
-    }, 1000)
+    }, 900)
 
     return () => clearTimeout(timer)
   }, [searchText, onSearch])
@@ -46,6 +46,13 @@ const SearchBarComponent = ({ onSearch, playlistId }: SearchBarProps) => {
             borderRadius="lg"
             marginRight={2}
           />
+          <InputRightElement>
+            <FaTimes
+              style={{ cursor: 'pointer', visibility: searchText ? 'visible' : 'hidden' }}
+              onClick={() => setSearchText('')}
+              color="fontColor.500"
+            />
+          </InputRightElement>
         </InputGroup>
         <Box>
           <ListenOnSpotifyPopover playlistId={playlistId} />

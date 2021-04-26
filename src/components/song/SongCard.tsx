@@ -1,66 +1,56 @@
 import React, { useState } from 'react'
-import { FaPlus, FaCheck } from 'react-icons/fa'
-import { Center, Flex, Text, Avatar, Spacer, IconButton } from '@chakra-ui/react'
-import { useMutation } from '@apollo/client'
-import { omit } from 'lodash'
+import { Center, Flex, Text, Avatar, Spacer } from '@chakra-ui/react'
 
-import {
-  AddSongToPlaylistResponse,
-  ADD_SONG_TO_PLAYLIST,
-  LOAD_PLAYLIST_SONGS,
-  PlaylistSong,
-  Song,
-} from '../../shared'
+import { PlaylistSong } from '../../shared'
+import { SongCardActionButton } from './SongCardActionButton'
+import { SongCardPlayButton } from './SongCardPlayButton'
 
 interface SongCardProps {
   playlistSong: PlaylistSong
-  playlistId: number
+  searchMode: boolean
+  showActionButtonLoading: boolean
+  showPlayButtonLoading: boolean
+  onAddSong: (playlistSong: PlaylistSong) => void
+  onPlaySong: (playlistSong: PlaylistSong, showToast: boolean) => void
 }
 
-interface AddSongHandleProps {
-  playlistId: number
-  addSongToPlaylist: any
-  setShared: any
-  song: Song
-}
-
-const addSongHandler = async ({
-  playlistId,
-  addSongToPlaylist,
-  setShared,
-  song,
-}: AddSongHandleProps) => {
-  const songInput = omit(song, 'id', '__typename')
-  const { data } = await addSongToPlaylist({
-    variables: {
-      song: songInput,
-      playlistId,
-    },
-  })
-  const { playlistSong } = data as AddSongToPlaylistResponse
-  const { sharedBy } = playlistSong
-  setShared(sharedBy?.displayName)
-}
-
-const SongCardComponent = ({ playlistSong, playlistId }: SongCardProps) => {
-  const [addSongToPlaylist, { loading }] = useMutation<AddSongToPlaylistResponse>(
-    ADD_SONG_TO_PLAYLIST,
-    {
-      refetchQueries: [
-        {
-          query: LOAD_PLAYLIST_SONGS,
-          variables: {
-            playlistId,
-          },
-        },
-      ],
-    },
-  )
+const SongCardComponent = ({
+  playlistSong,
+  searchMode,
+  showActionButtonLoading,
+  showPlayButtonLoading,
+  onAddSong,
+  onPlaySong,
+}: SongCardProps) => {
+  const [isMouseHover, setIsMouseOver] = useState<boolean>(false)
   const { sharedBy, song } = playlistSong
   const { name, artistsNames, albumImage300 } = song
-  const [shared, setShared] = useState(sharedBy?.displayName)
+  let preventPlaySong = false
   return (
-    <Flex boxShadow="dark-lg" rounded="md" align="center" padding={3}>
+    <Flex
+      boxShadow="dark-lg"
+      rounded="md"
+      align="center"
+      padding={3}
+      onMouseEnter={() => setIsMouseOver(true)}
+      onMouseLeave={() => setIsMouseOver(false)}
+      _hover={{
+        background: 'dark.500',
+      }}
+      onTouchMove={() => (preventPlaySong = true)}
+      onTouchEnd={() => {
+        if (preventPlaySong) {
+          preventPlaySong = false
+          return
+        }
+        onPlaySong(playlistSong, true)
+      }}
+    >
+      <SongCardPlayButton
+        onPlaySongClick={() => onPlaySong(playlistSong, false)}
+        shouldShow={searchMode ? false : isMouseHover}
+        showLoadingSpinner={showPlayButtonLoading}
+      />
       <Avatar marginRight={[2, 4]} marginLeft={[1, 2]} name={name} src={albumImage300} />
       <Spacer overflow="hidden">
         <Flex>
@@ -78,33 +68,22 @@ const SongCardComponent = ({ playlistSong, playlistId }: SongCardProps) => {
             <Text
               color="fontColor.500"
               textAlign="center"
-              display={shared ? 'inherit' : 'none'}
+              display={sharedBy?.displayName ? 'inherit' : 'none'}
               as="i"
               padding={3}
             >
-              Shared by {shared}
+              Shared by {sharedBy?.displayName}
             </Text>
           </Center>
         </Flex>
       </Spacer>
-      <IconButton
-        marginRight={[1, 2]}
-        marginLeft={[1, 2]}
-        color={shared ? 'fontColor.500' : 'fontColor.300'}
-        icon={shared ? <FaCheck /> : <FaPlus />}
-        onClick={() =>
-          addSongHandler({
-            playlistId,
-            addSongToPlaylist,
-            setShared,
-            song,
-          })
-        }
-        aria-label="Add to playlist"
-        isDisabled={!!shared}
-        isLoading={loading}
-        variant="outline"
-      />
+      {searchMode && (
+        <SongCardActionButton
+          onAddSongClick={() => onAddSong(playlistSong)}
+          playlistSong={playlistSong}
+          showLoadingSpinner={showActionButtonLoading}
+        />
+      )}
     </Flex>
   )
 }
