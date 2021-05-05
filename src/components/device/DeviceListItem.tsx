@@ -1,5 +1,5 @@
 import React from 'react'
-import { BiPlayCircle } from 'react-icons/bi'
+import { FaTabletAlt } from 'react-icons/fa'
 import { Button, ListItem } from '@chakra-ui/react'
 import { useMutation } from '@apollo/client'
 import { PLAY_ON_DEVICE } from '../../shared'
@@ -31,7 +31,7 @@ const DeviceListItemComponent = ({ deviceId, name, onClose, playlistId }: Device
       <Button
         variant="ghost"
         width="100%"
-        leftIcon={<BiPlayCircle color="#52b85e" /> /* not work spotify.200*/}
+        leftIcon={<FaTabletAlt color="#888f90" /> /* not work dark.700*/}
         onClick={() => onPlay(playOnDevice, { onClose, deviceId, playlistId })}
         isLoading={loading}
         justifyContent="flex-start"

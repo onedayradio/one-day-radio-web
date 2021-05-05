@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Center, Flex, Text, Avatar, Spacer } from '@chakra-ui/react'
+import { Flex, Text, Avatar, SimpleGrid, Spacer } from '@chakra-ui/react'
 
 import { PlaylistSong } from '../../shared'
 import { SongCardActionButton } from './SongCardActionButton'
@@ -53,29 +53,23 @@ const SongCardComponent = ({
       />
       <Avatar marginRight={[2, 4]} marginLeft={[1, 2]} name={name} src={albumImage300} />
       <Spacer overflow="hidden">
-        <Flex>
-          <Center width={['100%', '45%']}>
-            <Text color="fontColor.200" padding={3}>
-              {name}
-            </Text>
-          </Center>
-          <Center width={['100%', '45%']}>
-            <Text color="fontColor.300" padding={3} isTruncated>
-              {artistsNames}
-            </Text>
-          </Center>
-          <Center width={['100%', '45%']}>
-            <Text
-              color="fontColor.500"
-              textAlign="center"
-              display={sharedBy?.displayName ? 'inherit' : 'none'}
-              as="i"
-              padding={3}
-            >
-              Shared by {sharedBy?.displayName}
-            </Text>
-          </Center>
-        </Flex>
+        <SimpleGrid columns={[1, 3]}>
+          <Text color="fontColor.300" padding={[1, 3]} isTruncated>
+            {name}
+          </Text>
+          <Text textAlign={['left', 'center']} color="fontColor.200" padding={[1, 3]} isTruncated>
+            {artistsNames}
+          </Text>
+          <Text
+            textAlign={['left', 'right']}
+            color="fontColor.500"
+            display={sharedBy?.displayName ? 'inherit' : 'none'}
+            as="i"
+            padding={[1, 3]}
+          >
+            Shared by {sharedBy?.displayName}
+          </Text>
+        </SimpleGrid>
       </Spacer>
       {searchMode && (
         <SongCardActionButton

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaSpotify } from 'react-icons/fa'
+import { FaTv } from 'react-icons/fa'
 import {
   Button,
   List,
@@ -11,18 +11,17 @@ import {
   PopoverHeader,
   PopoverTrigger,
 } from '@chakra-ui/react'
-import { isMobile } from 'react-device-detect'
 import { useLazyQuery } from '@apollo/client'
 import { DevicesResponse, LOAD_DEVICES } from '../../shared'
 import { DeviceListItem } from '..'
 
-const TEXT_BUTTON = isMobile ? '' : 'Play on Spotify'
+const TEXT_BUTTON = 'Devices'
 
 interface ListenOnSpotifyPopoverProps {
   playlistId: number
 }
 
-const ListenOnSpotifyPopoverComponent = ({ playlistId }: ListenOnSpotifyPopoverProps) => {
+const DevicesPopoverComponent = ({ playlistId }: ListenOnSpotifyPopoverProps) => {
   const [loadDevices, { loading, data }] = useLazyQuery<DevicesResponse>(LOAD_DEVICES, {
     fetchPolicy: 'no-cache',
   })
@@ -37,12 +36,13 @@ const ListenOnSpotifyPopoverComponent = ({ playlistId }: ListenOnSpotifyPopoverP
     <Popover returnFocusOnClose={false} isOpen={isOpen} onOpen={open} onClose={close}>
       <PopoverTrigger>
         <Button
-          leftIcon={<FaSpotify />}
+          height={[9, 10]}
+          leftIcon={<FaTv />}
           isLoading={loading}
           loadingText={TEXT_BUTTON}
-          iconSpacing={[0, 2]}
+          iconSpacing={[1, 2]}
           borderRadius="lg"
-          fontSize="1rem"
+          fontSize={15}
           fontWeight="400"
           colorScheme="spotify"
         >
@@ -71,4 +71,4 @@ const ListenOnSpotifyPopoverComponent = ({ playlistId }: ListenOnSpotifyPopoverP
   )
 }
 
-export const ListenOnSpotifyPopover = React.memo(ListenOnSpotifyPopoverComponent)
+export const DevicesPopover = React.memo(DevicesPopoverComponent)
