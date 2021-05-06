@@ -4,16 +4,7 @@ import { MainHeaderBox } from './MainHeaderBox'
 
 const HeaderComponent = () => {
   return (
-    <Flex
-      position="absolute"
-      justify="center"
-      direction="row"
-      align="center"
-      bg="dark.200"
-      zIndex={1}
-      w="100%"
-      h={78}
-    >
+    <Flex align="center" justifyContent="center" bg="dark.200" zIndex={1} w="100%" h="125px">
       <MainHeaderBox />
     </Flex>
   )
