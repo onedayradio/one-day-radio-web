@@ -19,6 +19,7 @@ const HeaderBoxComponent = () => {
         position: 'absolute',
         backgroundImage: `url(${curve})`,
         backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
         bottom: '-35px',
         width: '100%',
         height: '50px',

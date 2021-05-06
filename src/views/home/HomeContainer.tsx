@@ -36,9 +36,9 @@ export default () => {
   return (
     <Box bgImage={backgroundImage} backgroundRepeat="round" pos="relative" h="100vh">
       <Header />
-      <HomeBox></HomeBox>
-      <LoginBox></LoginBox>
-      <Footer></Footer>
+      <HomeBox />
+      <LoginBox />
+      <Footer />
     </Box>
   )
 }

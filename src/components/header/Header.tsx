@@ -7,7 +7,6 @@ const HeaderComponent = () => {
     <Flex
       position="absolute"
       justify="center"
-      boxShadow="dark-lg"
       direction="row"
       align="center"
       bg="dark.200"

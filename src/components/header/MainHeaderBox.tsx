@@ -18,7 +18,8 @@ export const MainHeaderBoxComponent = () => {
         position: 'absolute',
         backgroundImage: `url(${curve})`,
         backgroundRepeat: 'no-repeat',
-        bottom: '-40px',
+        backgroundSize: 'cover',
+        bottom: '-39px',
         width: '100%',
         height: '50px',
       }}
