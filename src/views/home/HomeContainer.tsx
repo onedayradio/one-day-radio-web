@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, useToast } from '@chakra-ui/react'
+import { Flex, useToast } from '@chakra-ui/react'
 import { isMobile } from 'react-device-detect'
 import { Footer } from '../../components/footer/Footer'
 import { LoginBox } from './LoginBox'
@@ -34,11 +34,18 @@ export default () => {
   }, [toast, history])
 
   return (
-    <Box bgImage={backgroundImage} backgroundRepeat="round" pos="relative" h="100vh">
+    <Flex
+      direction="column"
+      justifyContent="space-between"
+      align="center"
+      bgImage={backgroundImage}
+      backgroundRepeat="round"
+      h={['100%', 'auto']}
+    >
       <Header />
       <HomeBox />
       <LoginBox />
       <Footer />
-    </Box>
+    </Flex>
   )
 }

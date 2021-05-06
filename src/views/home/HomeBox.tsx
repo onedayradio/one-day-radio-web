@@ -1,13 +1,20 @@
 import React from 'react'
-import { Box, Divider, Text } from '@chakra-ui/react'
+import { Divider, Flex, Text } from '@chakra-ui/react'
 
 const HomeBoxComponent = () => {
   return (
-    <Box pos="absolute" top="35%" w="100%" textAlign="center">
+    <Flex
+      direction="column"
+      w="100%"
+      h={['auto', '500px']}
+      textAlign="center"
+      align="center"
+      justifyContent="center"
+    >
       <Text fontSize="4xl" fontWeight="600" textTransform="uppercase" color="fontColor.200">
         New Music Everyday
       </Text>
-      <Divider borderColor="fontColor.200" w={['40%', '20%']} m="auto" />
+      <Divider borderColor="fontColor.200" w={['40%', '20%']} />
       <Text
         textTransform="uppercase"
         color="fontColor.200"
@@ -17,7 +24,7 @@ const HomeBoxComponent = () => {
       >
         From you, from the community
       </Text>
-    </Box>
+    </Flex>
   )
 }
 

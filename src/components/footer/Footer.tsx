@@ -11,7 +11,6 @@ export const FooterComponent = () => {
       justify="center"
       direction="row"
       align="center"
-      pos="absolute"
       fontSize="sm"
       bg="dark.600"
       bottom={0}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Flex, Image } from '@chakra-ui/react'
 
 import { Link } from 'react-router-dom'
 import logoImage from '../../assets/logo.svg'
