@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import { Flex, useToast } from '@chakra-ui/react'
 import { isMobile } from 'react-device-detect'
-import { Footer } from '../../components/footer/Footer'
+import { useQuery } from '@apollo/client'
+import { useHistory } from 'react-router-dom'
+
+import { Footer, GenreCard, GenresCards, Header, QueryResponseWrapper } from '../../components'
 import { LoginBox } from './LoginBox'
 import { HomeBox } from './HomeBox'
-import { useHistory } from 'react-router-dom'
-import { Header } from '../../components'
+import { Genre, GenresResponse, LOAD_ALL_GENRES, toastsHelper } from '../../shared'
 
 const backgroundImage = isMobile ? "url('/home-mobil.jpg')" : "url('/home-desktop.jpg')"
 
@@ -15,13 +17,7 @@ const displayAuthWarning = ({ toast, history }: any) => {
   const locationState = getLocationState({ history })
   const error = locationState?.error
   if (error) {
-    toast({
-      title: error.code,
-      description: error.description,
-      status: 'warning',
-      duration: 9000,
-      isClosable: true,
-    })
+    toastsHelper.showWarningToast(error, toast)
   }
 }
 
@@ -29,9 +25,16 @@ const displayAuthWarning = ({ toast, history }: any) => {
 export default () => {
   const history = useHistory()
   const toast = useToast()
+  const { data, error } = useQuery<GenresResponse>(LOAD_ALL_GENRES)
+  const genres = data?.genres || []
+
   useEffect(() => {
     displayAuthWarning({ toast, history })
   }, [toast, history])
+
+  const onGenreClick = (genre: Genre) => {
+    history.push(`/genre/${genre.id}/playlist/${genre.playlistId}`)
+  }
 
   return (
     <Flex
@@ -45,6 +48,21 @@ export default () => {
       <Header />
       <HomeBox />
       <LoginBox />
+      {!isMobile && (
+        <QueryResponseWrapper loading={false} error={error}>
+          <GenresCards title="Choose your favorite music style!">
+            {genres.map((genre) => (
+              <GenreCard
+                height={[100, 250]}
+                width={['50%', '33.33%']}
+                key={genre.id}
+                genre={genre}
+                onClick={onGenreClick}
+              />
+            ))}
+          </GenresCards>
+        </QueryResponseWrapper>
+      )}
       <Footer />
     </Flex>
   )
