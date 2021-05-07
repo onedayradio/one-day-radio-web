@@ -1,5 +1,5 @@
+export { HomeHeader } from './header/HomeHeader'
 export { Header } from './header/Header'
-export { HeaderWithUser } from './header/HeaderWithUser'
 export { SignInButton } from './header/SignInButton'
 export { UserMenu } from './header/UserMenu'
 export { QueryResponseWrapper } from './fetch/QueryResponseWrapper'

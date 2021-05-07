@@ -11,6 +11,7 @@ export const MainHeaderBoxComponent = () => {
       position="relative"
       boxShadow="dark-lg"
       direction="column"
+      paddingTop="40px"
       align="center"
       justifyContent="center"
       bg="dark.200"

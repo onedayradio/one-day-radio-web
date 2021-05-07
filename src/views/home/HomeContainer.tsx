@@ -4,7 +4,7 @@ import { isMobile } from 'react-device-detect'
 import { useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 
-import { Footer, GenreCard, GenresCards, Header, QueryResponseWrapper } from '../../components'
+import { Footer, GenreCard, GenresCards, HomeHeader, QueryResponseWrapper } from '../../components'
 import { LoginBox } from './LoginBox'
 import { HomeBox } from './HomeBox'
 import { Genre, GenresResponse, LOAD_ALL_GENRES, toastsHelper } from '../../shared'
@@ -45,7 +45,7 @@ export default () => {
       backgroundRepeat="round"
       h={['100%', 'auto']}
     >
-      <Header />
+      <HomeHeader />
       <HomeBox />
       <LoginBox />
       {!isMobile && (
