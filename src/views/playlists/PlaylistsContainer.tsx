@@ -18,7 +18,7 @@ export default ({ playlistId, genreId }: PlaylistsContainerProps) => {
     <Flex backgroundColor="dark.200" height="100%" flexDirection="column">
       <Header user={currentUser} />
       <PlaylistGenreBannerContainer genreId={genreId} />
-      <PlaylistSongsContainer playlistId={playlistId} />
+      <PlaylistSongsContainer genreId={genreId} playlistId={playlistId} />
       <PlaylistGenresContainer />
     </Flex>
   )

@@ -3,25 +3,33 @@ import { Flex, useToast } from '@chakra-ui/react'
 import { isMobile } from 'react-device-detect'
 import { useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
+import * as H from 'history'
 
-import { Footer, GenreCard, GenresCards, HomeHeader, QueryResponseWrapper } from '../../components'
-import { LoginBox } from './LoginBox'
-import { HomeBox } from './HomeBox'
+import {
+  Footer,
+  GenreCard,
+  GenresCards,
+  HomeHeader,
+  QueryResponseWrapper,
+  MainBanner,
+  LoginBox,
+} from '../../components'
 import { Genre, GenresResponse, LOAD_ALL_GENRES, toastsHelper } from '../../shared'
 
 const backgroundImage = isMobile ? "url('/home-mobil.jpg')" : "url('/home-desktop.jpg')"
 
 const getLocationState = ({ history }: any) => history?.location?.state
 
-const displayAuthWarning = ({ toast, history }: any) => {
+const displayAuthWarning = ({ toast, history }: { toast: any; history: H.History }) => {
   const locationState = getLocationState({ history })
   const error = locationState?.error
+  delete locationState?.error
+  history.replace('/', locationState)
   if (error) {
     toastsHelper.showWarningToast(error, toast)
   }
 }
 
-// eslint-disable-next-line react/display-name
 export default () => {
   const history = useHistory()
   const toast = useToast()
@@ -46,7 +54,7 @@ export default () => {
       h={['100%', 'auto']}
     >
       <HomeHeader />
-      <HomeBox />
+      <MainBanner />
       <LoginBox />
       {!isMobile && (
         <QueryResponseWrapper loading={false} error={error}>

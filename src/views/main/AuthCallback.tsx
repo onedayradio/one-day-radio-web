@@ -1,15 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
+import { TokenValidator } from './TokenValidator'
 
-import { useQueryString, localStorageUtil } from '../../shared'
+import { useQueryString, localStorageUtil, afterLoginHelper } from '../../shared'
 
-// eslint-disable-next-line react/display-name
 export default () => {
+  const history = useHistory()
   const [token] = useQueryString('token')
-  if (token) {
-    localStorageUtil.storeToken(token as string)
-    setTimeout(() => {
-      window.location.href = '/genres'
-    }, 1000)
+  const [tokenReady, setTokenReady] = useState(false)
+  const afterLoginAction = afterLoginHelper.getAfterLoginAction()
+  localStorageUtil.storeToken(token as string)
+
+  const doRedirect = () => {
+    if (tokenReady) {
+      return
+    }
+    setTokenReady(true)
+    if (afterLoginAction) {
+      history.push(afterLoginAction.route)
+    } else {
+      history.push('/genres')
+    }
   }
-  return <div></div>
+
+  setTimeout(() => {
+    doRedirect()
+  }, 1000)
+  return tokenReady ? <TokenValidator /> : <div></div>
 }

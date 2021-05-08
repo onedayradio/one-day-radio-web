@@ -1,7 +1,7 @@
 import React from 'react'
 import { Divider, Flex, Text } from '@chakra-ui/react'
 
-const HomeBoxComponent = () => {
+const MainBannerComponent = () => {
   return (
     <Flex
       direction="column"
@@ -28,4 +28,4 @@ const HomeBoxComponent = () => {
   )
 }
 
-export const HomeBox = React.memo(HomeBoxComponent)
+export const MainBanner = React.memo(MainBannerComponent)
