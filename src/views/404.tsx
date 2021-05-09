@@ -1,5 +1,5 @@
 import React from 'react'
-import noAllowMusic from '../../assets/not-allow-music.svg'
+import noAllowMusic from '../assets/not-allow-music.svg'
 import { Box, Center, Image, Text } from '@chakra-ui/react'
 
 // eslint-disable-next-line react/display-name

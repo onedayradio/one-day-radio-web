@@ -1,10 +1,11 @@
 import * as localStorageUtil from './util/localStorage'
 import * as authUtil from './util/auth'
 import * as toastsHelper from './util/toastsHelper'
+import * as afterLoginHelper from './util/afterLogin'
 
 export { browserHistory } from './util/historyUtil'
 
-export { authUtil, localStorageUtil, toastsHelper }
+export { authUtil, localStorageUtil, toastsHelper, afterLoginHelper }
 
 export { useQueryString } from './hooks/useQueryString'
 

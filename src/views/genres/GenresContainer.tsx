@@ -4,12 +4,14 @@ import { useHistory } from 'react-router-dom'
 import { Flex } from '@chakra-ui/react'
 
 import { LOAD_ALL_GENRES, GenresResponse, Genre } from '../../shared'
-import { QueryResponseWrapper, GenresCards, GenreCard } from '../../components'
+import { QueryResponseWrapper, GenresCards, GenreCard, Header } from '../../components'
 import { GenresBannerMobile } from './GenresBannerMobile'
 import { GenresBannerDesktop } from './GenresBannerDesktop'
+import { useStoreState } from '../../core'
 
 // eslint-disable-next-line react/display-name
 export default () => {
+  const currentUser = useStoreState((state) => state.currentUser.user)
   const history = useHistory()
   const { data, error, loading } = useQuery<GenresResponse>(LOAD_ALL_GENRES)
   const genres = data?.genres || []
@@ -20,6 +22,7 @@ export default () => {
 
   return (
     <Flex height="100%" flexDirection="column">
+      <Header user={currentUser} />
       <QueryResponseWrapper loading={loading} error={error}>
         <GenresBannerMobile />
         <GenresBannerDesktop />

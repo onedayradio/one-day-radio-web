@@ -9,7 +9,7 @@ const onSignInWithSpotify = () => {
 
 const LoginBoxComponent = () => {
   return (
-    <Box pos="absolute" bottom={50} fontWeight="300" w="100%" textAlign="center">
+    <Box fontWeight="300" w="100%" h="350px" textAlign="center">
       <Center bg={['none', 'dark.200']} height="40vh">
         <Box
           borderWidth={['none', '1px']}
@@ -37,15 +37,6 @@ const LoginBoxComponent = () => {
             margin="auto"
           />
           <Box paddingTop={['18%', '1.5rem']} pb="1%">
-            <Text
-              display={['block', 'none']}
-              color="fontColor.200"
-              fontWeight="400"
-              fontSize="2rem"
-              py={4}
-            >
-              Sign in
-            </Text>
             <SignInButton onClick={onSignInWithSpotify} />
           </Box>
         </Box>

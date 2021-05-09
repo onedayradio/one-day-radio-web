@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import { omit } from 'lodash'
+import { Box, useToast } from '@chakra-ui/react'
+import { useHistory } from 'react-router'
 
 import { QueryResponseWrapper, SearchBar, SongCard, SongCards } from '../../components'
 import {
@@ -14,10 +16,12 @@ import {
   Song,
   PlaylistSong,
   PLAY_ON_DEVICE,
+  afterLoginHelper,
 } from '../../shared'
-import { Box, useToast } from '@chakra-ui/react'
+import { useStoreState } from '../../core'
 
 interface PlaylistsContainerProps {
+  genreId: number
   playlistId: number
 }
 
@@ -26,86 +30,141 @@ const getQuery = (searchText?: string) => (searchText ? SEARCH_SONGS : LOAD_PLAY
 const getQueryParams = (playlistId: number, searchText?: string) =>
   searchText ? { playlistId, searchText } : { playlistId }
 
-export const PlaylistSongsContainer = React.memo(({ playlistId }: PlaylistsContainerProps) => {
-  const toast = useToast()
-  const [searchText, setSearchText] = useState<string>()
-  const [activeSong, setActiveSong] = useState<Song>()
-  const [
-    addSongToPlaylist,
-    { loading: isAddingSongToPlaylist },
-  ] = useMutation<AddSongToPlaylistResponse>(
-    ADD_SONG_TO_PLAYLIST,
-    addSongToPlaylistOptions(playlistId),
-  )
-  const query = getQuery(searchText)
-  const queryParams = getQueryParams(playlistId, searchText)
-  const { data, error, loading: isLoadingPlaylistSongs } = useQuery<PlaylistSongsResponse>(query, {
-    variables: queryParams,
-  })
-  const playlistSongs = data?.playlistSongs || []
-  const [playOnDevice, { loading: isPlayingSong }] = useMutation(PLAY_ON_DEVICE)
+export const PlaylistSongsContainer = React.memo(
+  ({ playlistId, genreId }: PlaylistsContainerProps) => {
+    const history = useHistory()
+    const currentUser = useStoreState((state) => state.currentUser.user)
+    const toast = useToast()
+    const [searchText, setSearchText] = useState<string>()
+    const [activeSong, setActiveSong] = useState<Song>()
+    setTimeout(() => currentUser && validateAfterLoginAction(), 1)
 
-  const addSongHandler = async (playlistSong: PlaylistSong) => {
-    try {
-      setActiveSong(playlistSong.song)
+    const [
+      addSongToPlaylist,
+      { loading: isAddingSongToPlaylist },
+    ] = useMutation<AddSongToPlaylistResponse>(
+      ADD_SONG_TO_PLAYLIST,
+      addSongToPlaylistOptions(playlistId),
+    )
+
+    const query = getQuery(searchText)
+    const queryParams = getQueryParams(playlistId, searchText)
+    const { data, error, loading: isLoadingPlaylistSongs } = useQuery<PlaylistSongsResponse>(
+      query,
+      {
+        variables: queryParams,
+      },
+    )
+    const playlistSongs = data?.playlistSongs || []
+
+    const [playOnDevice, { loading: isPlayingSong }] = useMutation(PLAY_ON_DEVICE)
+
+    const addSongHandler = async (playlistSong: PlaylistSong) => {
       const songInput = omit(playlistSong.song, 'id', '__typename')
-      await addSongToPlaylist({
-        variables: {
-          song: songInput,
-          playlistId,
-        },
-      })
-    } catch (error) {
-      toastsHelper.showWarningToast(error, toast)
-    }
-  }
-
-  const playSongHandler = async (playlistSong: PlaylistSong, showToast: boolean) => {
-    try {
-      setActiveSong(playlistSong.song)
-      if (showToast) {
-        toastsHelper.showInfoToast('Playing your song on your spotify device!', toast)
+      if (!currentUser) {
+        afterLoginHelper.storeAfterLoginAction({
+          route: `genre/${genreId}/playlist/${playlistId}`,
+          action: afterLoginHelper.Actions.ADD_SONG,
+          songInput,
+        })
+        toastsHelper.showInfoToast('Login is required to continue', toast)
+        history.push('/signin')
+        return
       }
-      await playOnDevice({
-        variables: { playlistId, spotifySongUri: playlistSong.song.spotifyUri },
-      })
-    } catch (error) {
-      toastsHelper.showWarningToast(error, toast)
+      setActiveSong(playlistSong.song)
+      await executeAddSong(songInput, false)
     }
-  }
-  return (
-    <>
-      <SearchBar onSearch={setSearchText} playlistId={playlistId} />
-      <QueryResponseWrapper loading={isLoadingPlaylistSongs} error={error}>
-        <Box
-          overflow="hidden"
-          height="100%"
-          display="flex"
-          flexDirection="column"
-          width={['100%', '71%']}
-          margin={['none', 'auto']}
-        >
-          <SongCards>
-            {playlistSongs.map((playlistSong) => (
-              <SongCard
-                key={playlistSong.song.spotifyId}
-                playlistSong={playlistSong}
-                onAddSong={addSongHandler}
-                onPlaySong={playSongHandler}
-                searchMode={searchText ? true : false}
-                showActionButtonLoading={
-                  activeSong?.spotifyId === playlistSong.song.spotifyId
-                    ? isAddingSongToPlaylist
-                    : false
-                }
-                showPlayButtonLoading={
-                  activeSong?.spotifyId === playlistSong.song.spotifyId ? isPlayingSong : false
-                }
-              />
-            ))}
-          </SongCards>
-        </Box>
-      </QueryResponseWrapper>
-    </>
-  )
-})
+
+    const playSongHandler = async (playlistSong: PlaylistSong, showToast: boolean) => {
+      if (!currentUser) {
+        afterLoginHelper.storeAfterLoginAction({
+          route: `genre/${genreId}/playlist/${playlistId}`,
+          action: afterLoginHelper.Actions.PLAY_SONG,
+          spotifySongUri: playlistSong.song.spotifyUri,
+        })
+        toastsHelper.showInfoToast('Login is required to continue', toast)
+        history.push('/signin')
+        return
+      }
+      setActiveSong(playlistSong.song)
+      await executePlayOnDevice(playlistSong.song.spotifyUri, showToast)
+    }
+
+    const validateAfterLoginAction = () => {
+      const afterLoginAction = afterLoginHelper.getAndClearAfterLoginAction()
+      if (!afterLoginAction) {
+        return
+      }
+      if (afterLoginAction.action === afterLoginHelper.Actions.PLAY_SONG) {
+        executePlayOnDevice(afterLoginAction.spotifySongUri, true)
+      }
+      if (afterLoginAction.action === afterLoginHelper.Actions.ADD_SONG) {
+        executeAddSong(afterLoginAction.songInput, true)
+      }
+    }
+
+    const executePlayOnDevice = async (spotifySongUri?: string, showToast?: boolean) => {
+      try {
+        await playOnDevice({
+          variables: { playlistId, spotifySongUri },
+        })
+        if (showToast) {
+          toastsHelper.showInfoToast('Playing your song on your spotify device!', toast)
+        }
+      } catch (error) {
+        toastsHelper.showWarningToast(error, toast)
+      }
+    }
+
+    const executeAddSong = async (songInput?: Partial<Song>, showToast?: boolean) => {
+      try {
+        await addSongToPlaylist({
+          variables: {
+            song: songInput,
+            playlistId,
+          },
+        })
+        if (showToast) {
+          toastsHelper.showInfoToast('Your song has been added to the playlist!', toast)
+        }
+      } catch (error) {
+        toastsHelper.showWarningToast(error, toast)
+      }
+    }
+    return (
+      <>
+        <SearchBar onSearch={setSearchText} playlistId={playlistId} />
+        <QueryResponseWrapper loading={isLoadingPlaylistSongs} error={error}>
+          <Box
+            overflow="hidden"
+            height="100%"
+            display="flex"
+            flexDirection="column"
+            width={['100%', '71%']}
+            margin={['none', 'auto']}
+          >
+            <SongCards>
+              {playlistSongs.map((playlistSong) => (
+                <SongCard
+                  key={playlistSong.song.spotifyId}
+                  playlistSong={playlistSong}
+                  onAddSong={addSongHandler}
+                  onPlaySong={playSongHandler}
+                  searchMode={searchText ? true : false}
+                  showActionButtonLoading={
+                    activeSong?.spotifyId === playlistSong.song.spotifyId
+                      ? isAddingSongToPlaylist
+                      : false
+                  }
+                  showPlayButtonLoading={
+                    activeSong?.spotifyId === playlistSong.song.spotifyId ? isPlayingSong : false
+                  }
+                />
+              ))}
+            </SongCards>
+          </Box>
+        </QueryResponseWrapper>
+      </>
+    )
+  },
+)
