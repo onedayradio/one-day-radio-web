@@ -1,41 +1,39 @@
 import React from 'react'
 import { FaTabletAlt } from 'react-icons/fa'
 import { Button, ListItem } from '@chakra-ui/react'
-import { useMutation } from '@apollo/client'
-import { PLAY_ON_DEVICE } from '../../shared'
+import { localStorageUtil } from '../../shared'
 
 interface DeviceListItemProps {
   deviceId: string
   name?: string
   onClose: () => void
-  playlistId: number
+  onSelectDevice: (deviceId: string) => void
+  selected?: boolean
 }
 
-const onPlay = async (
-  playOnDevice: any,
-  { onClose, deviceId, playlistId }: DeviceListItemProps,
-) => {
-  await playOnDevice({
-    variables: {
-      deviceId,
-      playlistId,
-    },
-  })
+const handleSelectDevice = async ({ onClose, deviceId, onSelectDevice }: DeviceListItemProps) => {
+  localStorageUtil.setDeviceId(deviceId)
+  onSelectDevice(deviceId)
   onClose()
 }
 
-const DeviceListItemComponent = ({ deviceId, name, onClose, playlistId }: DeviceListItemProps) => {
-  const [playOnDevice, { loading }] = useMutation(PLAY_ON_DEVICE)
+const DeviceListItemComponent = ({
+  deviceId,
+  name,
+  onClose,
+  onSelectDevice,
+  selected,
+}: DeviceListItemProps) => {
   return (
     <ListItem key={deviceId}>
       <Button
         variant="ghost"
         width="100%"
         leftIcon={<FaTabletAlt color="#888f90" /> /* not work dark.700*/}
-        onClick={() => onPlay(playOnDevice, { onClose, deviceId, playlistId })}
-        isLoading={loading}
+        onClick={() => handleSelectDevice({ onClose, deviceId, onSelectDevice })}
         justifyContent="flex-start"
         overflow="hidden"
+        textColor={selected ? 'spotify.200' : 'fontColor.200'}
       >
         {name}
       </Button>

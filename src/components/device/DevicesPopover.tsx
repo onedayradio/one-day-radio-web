@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTv } from 'react-icons/fa'
 import {
   Button,
@@ -10,28 +10,55 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
+  useToast,
 } from '@chakra-ui/react'
 import { useLazyQuery } from '@apollo/client'
-import { DevicesResponse, LOAD_DEVICES } from '../../shared'
+import { DevicesResponse, LOAD_DEVICES, localStorageUtil, toastsHelper } from '../../shared'
 import { DeviceListItem } from '..'
 
 const TEXT_BUTTON = 'Devices'
 
-interface ListenOnSpotifyPopoverProps {
-  playlistId: number
+interface loadDevicesResponse {
+  devices: any
 }
 
-const DevicesPopoverComponent = ({ playlistId }: ListenOnSpotifyPopoverProps) => {
+const DevicesPopoverComponent = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedDeviceId, setSelectedDeviceId] = useState('')
+  const toast = useToast()
+
+  const onCompleted = ({ devices }: loadDevicesResponse) => {
+    if (!devices.length) {
+      setIsOpen(false)
+      toastsHelper.showWarningToast(
+        {
+          title: 'We cannot find open devices',
+          description: 'Please open Spotify in one of your devices',
+        },
+        toast,
+      )
+    }
+  }
   const [loadDevices, { loading, data }] = useLazyQuery<DevicesResponse>(LOAD_DEVICES, {
     fetchPolicy: 'no-cache',
+    onCompleted,
   })
-  const [isOpen, setIsOpen] = useState(false)
+
   const open = async () => {
     await loadDevices()
     setIsOpen(!isOpen)
   }
   const close = () => setIsOpen(false)
+  const selectDevice = (deviceId: string) => setSelectedDeviceId(deviceId)
+
   const devices = data?.devices || []
+
+  useEffect(() => {
+    loadDevices()
+    const deviceId = localStorageUtil.getDeviceId()
+    deviceId && setSelectedDeviceId(deviceId)
+  }, [loadDevices])
+
   return (
     <Popover returnFocusOnClose={false} isOpen={isOpen} onOpen={open} onClose={close}>
       <PopoverTrigger>
@@ -55,13 +82,14 @@ const DevicesPopoverComponent = ({ playlistId }: ListenOnSpotifyPopoverProps) =>
         <PopoverHeader textColor="fontColor.200">Spotify Active Devices</PopoverHeader>
         <PopoverBody>
           <List spacing={3}>
-            {devices.map(({ name, id }) => (
+            {devices?.map(({ name, id }) => (
               <DeviceListItem
                 key={id}
                 name={name}
                 deviceId={id}
-                playlistId={playlistId}
                 onClose={close}
+                onSelectDevice={selectDevice}
+                selected={selectedDeviceId === id}
               />
             ))}
           </List>

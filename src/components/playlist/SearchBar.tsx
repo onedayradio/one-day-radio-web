@@ -68,7 +68,7 @@ const SearchBarComponent = ({ onSearch, playlistId }: SearchBarProps) => {
       <Flex width={['92%', '70%']} margin="auto">
         <PlayOnSpotifyButton playlistId={playlistId} />
         <Spacer />
-        <DevicesPopover playlistId={playlistId} />
+        <DevicesPopover />
       </Flex>
     </Box>
   )

@@ -21,7 +21,7 @@ export const AppRoutes = () => {
           path="/"
           render={() => (currentUser ? <Redirect to="/genres" /> : <HomeContainer />)}
         />
-        <Route exact path="/signin" component={SignInContainer} />
+        <Route exact path="/signIn" component={SignInContainer} />
         <Route exact path="/auth-callback" component={AuthCallback} />
         <Route exact path="/genres" component={GenresContainer} />
         <Route

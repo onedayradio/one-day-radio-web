@@ -15,7 +15,7 @@ export const PlaylistGenresContainerComponent = () => {
   const genres = data?.genres || []
   return (
     <Box display={['none', 'initial']}>
-      <Box marginTop={2}>
+      <Box marginTop={6}>
         <Flex height="4rem" backgroundColor="dark.600">
           <Center width="100%">
             <Box>

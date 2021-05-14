@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 
 import { PlaylistGenresContainer } from './PlaylistGenresContainer'
 import { PlaylistSongsContainer } from './PlaylistSongsContainer'
@@ -15,11 +15,11 @@ interface PlaylistsContainerProps {
 export default ({ playlistId, genreId }: PlaylistsContainerProps) => {
   const currentUser = useStoreState((state) => state.currentUser.user)
   return (
-    <Flex backgroundColor="dark.200" height="100%" flexDirection="column">
+    <Box backgroundColor="dark.200">
       <Header user={currentUser} />
       <PlaylistGenreBannerContainer genreId={genreId} />
       <PlaylistSongsContainer genreId={genreId} playlistId={playlistId} />
       <PlaylistGenresContainer />
-    </Flex>
+    </Box>
   )
 }

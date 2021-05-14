@@ -11,7 +11,7 @@ const GenresBannerMobileComponent = () => {
       backgroundColor="dark.600"
     >
       <Center width="100%">
-        <Box>
+        <Box paddingBottom={3}>
           <Text
             textAlign="center"
             fontSize="md"
