@@ -16,7 +16,7 @@ const stackStlye = {
 }
 
 const SongCardsComponent = ({ children }: SongCardsProps) => (
-  <Stack sx={stackStlye} spacing={8} overflowY="auto" padding={3}>
+  <Stack sx={stackStlye} spacing={8} overflowY="auto" padding={3} maxHeight={1000}>
     {children}
   </Stack>
 )

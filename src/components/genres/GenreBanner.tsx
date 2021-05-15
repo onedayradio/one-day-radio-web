@@ -30,14 +30,13 @@ const GenreBannerComp = ({
       paddingTop={55}
       backgroundSize="cover"
       backgroundPosition="center"
-      height={height}
       width={width}
     >
-      <Center height="100%">
+      <Center height={height}>
         <Box>
           <Image
             src={(genreIcons as any)[genreName]}
-            height={{ base: '60px', md: '85px' }}
+            height={{ base: '60px', md: '90px' }}
             margin="auto"
           />
           <Text

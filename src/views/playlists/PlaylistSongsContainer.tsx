@@ -17,6 +17,7 @@ import {
   PlaylistSong,
   PLAY_ON_DEVICE,
   afterLoginHelper,
+  localStorageUtil,
 } from '../../shared'
 import { useStoreState } from '../../core'
 
@@ -68,7 +69,7 @@ export const PlaylistSongsContainer = React.memo(
           songInput,
         })
         toastsHelper.showInfoToast('Login is required to continue', toast)
-        history.push('/signin')
+        history.push('/signIn')
         return
       }
       setActiveSong(playlistSong.song)
@@ -83,30 +84,31 @@ export const PlaylistSongsContainer = React.memo(
           spotifySongUri: playlistSong.song.spotifyUri,
         })
         toastsHelper.showInfoToast('Login is required to continue', toast)
-        history.push('/signin')
+        history.push('/signIn')
         return
       }
       setActiveSong(playlistSong.song)
       await executePlayOnDevice(playlistSong.song.spotifyUri, showToast)
     }
 
-    const validateAfterLoginAction = () => {
+    const validateAfterLoginAction = async () => {
       const afterLoginAction = afterLoginHelper.getAndClearAfterLoginAction()
       if (!afterLoginAction) {
         return
       }
       if (afterLoginAction.action === afterLoginHelper.Actions.PLAY_SONG) {
-        executePlayOnDevice(afterLoginAction.spotifySongUri, true)
+        await executePlayOnDevice(afterLoginAction.spotifySongUri, true)
       }
       if (afterLoginAction.action === afterLoginHelper.Actions.ADD_SONG) {
-        executeAddSong(afterLoginAction.songInput, true)
+        await executeAddSong(afterLoginAction.songInput, true)
       }
     }
 
     const executePlayOnDevice = async (spotifySongUri?: string, showToast?: boolean) => {
       try {
+        const spotifyDeviceId = localStorageUtil.getDeviceId()
         await playOnDevice({
-          variables: { playlistId, spotifySongUri },
+          variables: { playlistId, spotifySongUri, spotifyDeviceId },
         })
         if (showToast) {
           toastsHelper.showInfoToast('Playing your song on your spotify device!', toast)
@@ -137,7 +139,6 @@ export const PlaylistSongsContainer = React.memo(
         <QueryResponseWrapper loading={isLoadingPlaylistSongs} error={error}>
           <Box
             overflow="hidden"
-            height="100%"
             display="flex"
             flexDirection="column"
             width={['100%', '71%']}
@@ -150,7 +151,7 @@ export const PlaylistSongsContainer = React.memo(
                   playlistSong={playlistSong}
                   onAddSong={addSongHandler}
                   onPlaySong={playSongHandler}
-                  searchMode={searchText ? true : false}
+                  searchMode={!!searchText}
                   showActionButtonLoading={
                     activeSong?.spotifyId === playlistSong.song.spotifyId
                       ? isAddingSongToPlaylist

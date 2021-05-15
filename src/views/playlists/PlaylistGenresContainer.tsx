@@ -14,8 +14,8 @@ export const PlaylistGenresContainerComponent = () => {
   const { data } = useQuery<GenresResponse>(LOAD_ALL_GENRES)
   const genres = data?.genres || []
   return (
-    <Box display={['none', 'block']}>
-      <Box marginTop={2}>
+    <Box display={['none', 'initial']}>
+      <Box marginTop={6}>
         <Flex height="4rem" backgroundColor="dark.600">
           <Center width="100%">
             <Box>
