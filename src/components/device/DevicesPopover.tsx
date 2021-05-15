@@ -10,38 +10,27 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
-  useToast,
 } from '@chakra-ui/react'
 import { useLazyQuery } from '@apollo/client'
-import { DevicesResponse, LOAD_DEVICES, localStorageUtil, toastsHelper } from '../../shared'
+import { DevicesResponse, LOAD_DEVICES } from '../../shared'
 import { DeviceListItem } from '..'
+import { useStoreActions, useStoreState } from '../../core'
 
 const TEXT_BUTTON = 'Devices'
 
-interface loadDevicesResponse {
-  devices: any
-}
-
 const DevicesPopoverComponent = () => {
+  const currentUser = useStoreState((state) => state.currentUser.user)
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedDeviceId, setSelectedDeviceId] = useState('')
-  const toast = useToast()
+  const selectedDeviceId = useStoreState((state) => state.selectedDevice.deviceId)
+  const setDeviceId = useStoreActions((dispatch) => dispatch.selectedDevice.setSelectedDeviceId)
 
-  const onCompleted = ({ devices }: loadDevicesResponse) => {
-    if (!devices.length) {
-      setIsOpen(false)
-      toastsHelper.showWarningToast(
-        {
-          title: 'We cannot find open devices',
-          description: 'Please open Spotify in one of your devices',
-        },
-        toast,
-      )
-    }
-  }
   const [loadDevices, { loading, data }] = useLazyQuery<DevicesResponse>(LOAD_DEVICES, {
     fetchPolicy: 'no-cache',
-    onCompleted,
+    onCompleted: ({ devices }: DevicesResponse) => {
+      if (devices && devices.length > 0) {
+        setDeviceId(devices[0].id)
+      }
+    },
   })
 
   const open = async () => {
@@ -49,15 +38,16 @@ const DevicesPopoverComponent = () => {
     setIsOpen(!isOpen)
   }
   const close = () => setIsOpen(false)
-  const selectDevice = (deviceId: string) => setSelectedDeviceId(deviceId)
+  const selectDevice = (deviceId: string) => setDeviceId(deviceId)
 
   const devices = data?.devices || []
 
   useEffect(() => {
+    if (!currentUser) {
+      return
+    }
     loadDevices()
-    const deviceId = localStorageUtil.getDeviceId()
-    deviceId && setSelectedDeviceId(deviceId)
-  }, [loadDevices])
+  }, [loadDevices, currentUser])
 
   return (
     <Popover returnFocusOnClose={false} isOpen={isOpen} onOpen={open} onClose={close}>

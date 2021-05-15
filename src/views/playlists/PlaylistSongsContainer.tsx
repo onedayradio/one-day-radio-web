@@ -4,7 +4,13 @@ import { omit } from 'lodash'
 import { Box, useToast } from '@chakra-ui/react'
 import { useHistory } from 'react-router'
 
-import { QueryResponseWrapper, SearchBar, SongCard, SongCards } from '../../components'
+import {
+  PlaylistToolbar,
+  QueryResponseWrapper,
+  SearchBar,
+  SongCard,
+  SongCards,
+} from '../../components'
 import {
   PlaylistSongsResponse,
   LOAD_PLAYLIST_SONGS,
@@ -17,7 +23,6 @@ import {
   PlaylistSong,
   PLAY_ON_DEVICE,
   afterLoginHelper,
-  localStorageUtil,
 } from '../../shared'
 import { useStoreState } from '../../core'
 
@@ -35,6 +40,7 @@ export const PlaylistSongsContainer = React.memo(
   ({ playlistId, genreId }: PlaylistsContainerProps) => {
     const history = useHistory()
     const currentUser = useStoreState((state) => state.currentUser.user)
+    const selectedDeviceId = useStoreState((state) => state.selectedDevice.deviceId)
     const toast = useToast()
     const [searchText, setSearchText] = useState<string>()
     const [activeSong, setActiveSong] = useState<Song>()
@@ -106,15 +112,18 @@ export const PlaylistSongsContainer = React.memo(
 
     const executePlayOnDevice = async (spotifySongUri?: string, showToast?: boolean) => {
       try {
-        const spotifyDeviceId = localStorageUtil.getDeviceId()
         await playOnDevice({
-          variables: { playlistId, spotifySongUri, spotifyDeviceId },
+          variables: { playlistId, spotifySongUri, spotifyDeviceId: selectedDeviceId },
         })
         if (showToast) {
           toastsHelper.showInfoToast('Playing your song on your spotify device!', toast)
         }
       } catch (error) {
-        toastsHelper.showWarningToast(error, toast)
+        if (error.message === 'Resource not found') {
+          toastsHelper.showInfoToast('Please select a spotify device and try again :)', toast)
+        } else {
+          toastsHelper.showWarningToast(error, toast)
+        }
       }
     }
 
@@ -135,7 +144,10 @@ export const PlaylistSongsContainer = React.memo(
     }
     return (
       <>
-        <SearchBar onSearch={setSearchText} playlistId={playlistId} />
+        <Box position="relative" top={-30} height={36}>
+          <SearchBar onSearch={setSearchText} />
+          <PlaylistToolbar playlistId={playlistId} genreId={genreId} />
+        </Box>
         <QueryResponseWrapper loading={isLoadingPlaylistSongs} error={error}>
           <Box
             overflow="hidden"
