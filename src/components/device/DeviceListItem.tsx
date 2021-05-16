@@ -1,7 +1,6 @@
 import React from 'react'
 import { FaTabletAlt } from 'react-icons/fa'
 import { Button, ListItem } from '@chakra-ui/react'
-import { localStorageUtil } from '../../shared'
 
 interface DeviceListItemProps {
   deviceId: string
@@ -12,7 +11,6 @@ interface DeviceListItemProps {
 }
 
 const handleSelectDevice = async ({ onClose, deviceId, onSelectDevice }: DeviceListItemProps) => {
-  localStorageUtil.setDeviceId(deviceId)
   onSelectDevice(deviceId)
   onClose()
 }
