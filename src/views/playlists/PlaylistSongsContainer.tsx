@@ -46,22 +46,22 @@ export const PlaylistSongsContainer = React.memo(
     const [activeSong, setActiveSong] = useState<Song>()
     setTimeout(() => currentUser && validateAfterLoginAction(), 1)
 
-    const [
-      addSongToPlaylist,
-      { loading: isAddingSongToPlaylist },
-    ] = useMutation<AddSongToPlaylistResponse>(
-      ADD_SONG_TO_PLAYLIST,
-      addSongToPlaylistOptions(playlistId),
-    )
+    const [addSongToPlaylist, { loading: isAddingSongToPlaylist }] =
+      useMutation<AddSongToPlaylistResponse>(
+        ADD_SONG_TO_PLAYLIST,
+        addSongToPlaylistOptions(playlistId),
+      )
 
     const query = getQuery(searchText)
     const queryParams = getQueryParams(playlistId, searchText)
-    const { data, error, loading: isLoadingPlaylistSongs } = useQuery<PlaylistSongsResponse>(
-      query,
-      {
-        variables: queryParams,
-      },
-    )
+    const {
+      data,
+      error,
+      loading: isLoadingPlaylistSongs,
+    } = useQuery<PlaylistSongsResponse>(query, {
+      fetchPolicy: 'no-cache',
+      variables: queryParams,
+    })
     const playlistSongs = data?.playlistSongs || []
 
     const [playOnDevice, { loading: isPlayingSong }] = useMutation(PLAY_ON_DEVICE)
