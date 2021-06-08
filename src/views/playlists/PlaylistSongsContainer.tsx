@@ -5,7 +5,6 @@ import { Box, useToast } from '@chakra-ui/react'
 import { useHistory } from 'react-router'
 
 import {
-  PlaylistToolbar,
   QueryResponseWrapper,
   SearchBar,
   SongCard,
@@ -145,8 +144,7 @@ export const PlaylistSongsContainer = React.memo(
     return (
       <>
         <Box position="relative" top={-30} height={36}>
-          <SearchBar onSearch={setSearchText} />
-          <PlaylistToolbar playlistId={playlistId} genreId={genreId} />
+          <SearchBar onSearch={setSearchText} playlistId={playlistId} genreId={genreId}/>
         </Box>
         <QueryResponseWrapper loading={isLoadingPlaylistSongs} error={error}>
           <Box
