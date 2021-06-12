@@ -40,12 +40,22 @@ const GenreBannerComp = ({
             margin="auto"
           />
           <Text
+            marginBottom={[-2, -4]}
+            marginTop={[2, 5]}
+            marginLeft={[0, 1]}
             textTransform="uppercase"
-            marginTop={[1, 2]}
+            color="fontColor.200"
+            fontWeight="600"
+            fontSize={['xs', 'sm']}
+          >
+            Playlist
+          </Text>
+          <Text
+            textTransform="uppercase"
             color="fontColor.200"
             textAlign="center"
             fontWeight="600"
-            fontSize={['3xl', '5xl']}
+            fontSize={['3xl', '6xl']}
           >
             {genreName}
           </Text>

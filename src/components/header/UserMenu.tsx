@@ -36,9 +36,9 @@ export const UserMenu = React.memo(({ currentUser }: UserMenuProps) => {
           width="90px"
           cursor="pointer"
           backgroundColor="dark.200"
-          right={['50px', 0]}
+          right={['4px', 0]}
         >
-          <PopoverArrow backgroundColor="dark.200" left={['22px', '-28px']} />
+          <PopoverArrow backgroundColor="dark.200" left={[0, '-26px']} />
           <PopoverBody onClick={authUtil.signOut} color="red">
             <Text color="fontColor.200">Log out</Text>
           </PopoverBody>

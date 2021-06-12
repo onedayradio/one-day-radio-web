@@ -1,6 +1,7 @@
 import React from 'react'
-import { FaSpotify } from 'react-icons/fa'
+import { FaRegPlayCircle } from 'react-icons/fa'
 import { Button, useToast } from '@chakra-ui/react'
+import { isMobile } from 'react-device-detect'
 import { useMutation } from '@apollo/client'
 import { useHistory } from 'react-router'
 
@@ -47,17 +48,19 @@ const PlayOnSpotifyButtonComponent = ({ playlistId, genreId }: PlayOnSpotifyProp
 
   return (
     <Button
-      height={[9, 10]}
-      leftIcon={<FaSpotify />}
+      height={10}
+      marginLeft={3}
+      leftIcon={<FaRegPlayCircle />}
       isLoading={loading}
-      iconSpacing={[1, 2]}
+      iconSpacing={[0, 2]}
       borderRadius="lg"
-      fontSize={15}
+      fontSize={16}
+      padding={[0, 4]}
       fontWeight="400"
       colorScheme="spotify"
       onClick={() => onPlay()}
     >
-      Play on Spotify
+      {isMobile ? '' :  'Play on Spotify'}
     </Button>
   )
 }
