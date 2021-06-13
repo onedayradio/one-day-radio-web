@@ -39,7 +39,10 @@ const PlayOnSpotifyButtonComponent = ({ playlistId, genreId }: PlayOnSpotifyProp
       })
     } catch (error) {
       if (error.message === 'Resource not found') {
-        toastsHelper.showInfoToast('Please select a spotify device and try again :)', toast)
+        toastsHelper.showInfoToast(
+          'Please open your favorite Spotify device and try again :)',
+          toast,
+        )
       } else {
         toastsHelper.showWarningToast(error, toast)
       }
@@ -60,7 +63,7 @@ const PlayOnSpotifyButtonComponent = ({ playlistId, genreId }: PlayOnSpotifyProp
       colorScheme="spotify"
       onClick={() => onPlay()}
     >
-      {isMobile ? '' :  'Play on Spotify'}
+      {isMobile ? '' : 'Play on Spotify'}
     </Button>
   )
 }

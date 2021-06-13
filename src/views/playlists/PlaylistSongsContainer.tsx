@@ -4,12 +4,7 @@ import { omit } from 'lodash'
 import { Box, useToast } from '@chakra-ui/react'
 import { useHistory } from 'react-router'
 
-import {
-  QueryResponseWrapper,
-  SearchBar,
-  SongCard,
-  SongCards,
-} from '../../components'
+import { QueryResponseWrapper, SearchBar, SongCard, SongCards } from '../../components'
 import {
   PlaylistSongsResponse,
   LOAD_PLAYLIST_SONGS,
@@ -58,7 +53,6 @@ export const PlaylistSongsContainer = React.memo(
       error,
       loading: isLoadingPlaylistSongs,
     } = useQuery<PlaylistSongsResponse>(query, {
-      fetchPolicy: 'no-cache',
       variables: queryParams,
     })
     const playlistSongs = data?.playlistSongs || []
@@ -119,7 +113,10 @@ export const PlaylistSongsContainer = React.memo(
         }
       } catch (error) {
         if (error.message === 'Resource not found') {
-          toastsHelper.showInfoToast('Please select a spotify device and try again :)', toast)
+          toastsHelper.showInfoToast(
+            'Please open your favorite Spotify device and try again :)',
+            toast,
+          )
         } else {
           toastsHelper.showWarningToast(error, toast)
         }
@@ -144,7 +141,7 @@ export const PlaylistSongsContainer = React.memo(
     return (
       <>
         <Box position="relative" top={-30} height={36}>
-          <SearchBar onSearch={setSearchText} playlistId={playlistId} genreId={genreId}/>
+          <SearchBar onSearch={setSearchText} playlistId={playlistId} genreId={genreId} />
         </Box>
         <QueryResponseWrapper loading={isLoadingPlaylistSongs} error={error}>
           <Box
